@@ -14,6 +14,7 @@ import uuid
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
+from pathlib import PurePosixPath
 from xml.etree import ElementTree
 
 import markdown
@@ -60,6 +61,10 @@ SECTION_HEADING = re.compile(
     r"(?m)^# (前言[:：].*|第\d+章 .*|结语[:：].*|附录A[:：].*|附录B[:：].*)\s*$"
 )
 MARKDOWN_EXTENSIONS = ["extra", "sane_lists"]
+CALLOUT_MARKERS = (("⚠", "warn"), ("🔬", "lab"), ("📌", "points"), ("✍", "exercise"))
+MARKER_RE = re.compile(r"[⚠🔬📌✍]\ufe0f?[ \t]*")
+HEADING_RE = re.compile(r"^(#{1,6})\s+(.+)$")
+QUOTE_RE = re.compile(r"^>\s?(.*)$")
 
 
 @dataclass(frozen=True)
@@ -68,6 +73,70 @@ class Section:
     title: str
     markdown: str
     body_html: str
+
+
+def callout_kind(text: str) -> str | None:
+    return next((kind for marker, kind in CALLOUT_MARKERS if marker in text), None)
+
+
+def without_marker(text: str) -> str:
+    return MARKER_RE.sub("", text).strip()
+
+
+def emit_callout(kind: str, body: list[str]) -> list[str]:
+    return ["", f'<aside class="callout {kind}" markdown="1">', "", *body, "", "</aside>", ""]
+
+
+def transform_callouts(source: str) -> str:
+    """Turn emoji-labelled Markdown sections into asset-free EPUB cards."""
+    lines = source.splitlines()
+    output: list[str] = []
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        heading = HEADING_RE.match(line)
+        kind = callout_kind(heading.group(2)) if heading else None
+        if heading and kind:
+            level = len(heading.group(1))
+            body = [f"**{without_marker(heading.group(2))}**", ""]
+            index += 1
+            while index < len(lines):
+                following = HEADING_RE.match(lines[index])
+                if following and len(following.group(1)) <= level:
+                    break
+                body.append(lines[index])
+                index += 1
+            output.extend(emit_callout(kind, body))
+            continue
+
+        quote = QUOTE_RE.match(line)
+        kind = callout_kind(quote.group(1)) if quote else None
+        if quote and kind:
+            body = [without_marker(quote.group(1))]
+            index += 1
+            while index < len(lines):
+                following = QUOTE_RE.match(lines[index])
+                if following:
+                    if callout_kind(following.group(1)):
+                        break
+                    body.append(following.group(1))
+                    index += 1
+                    continue
+                if not lines[index].strip():
+                    next_content = index + 1
+                    while next_content < len(lines) and not lines[next_content].strip():
+                        next_content += 1
+                    if next_content < len(lines) and QUOTE_RE.match(lines[next_content]):
+                        body.append("")
+                        index = next_content
+                        continue
+                break
+            output.extend(emit_callout(kind, body))
+            continue
+
+        output.append(line)
+        index += 1
+    return MARKER_RE.sub("", "\n".join(output))
 
 
 def split_sections(source: str) -> list[Section]:
@@ -83,7 +152,7 @@ def split_sections(source: str) -> list[Section]:
         body = re.sub(r"\n\s*---\s*$", "", body).strip()
         body = re.sub(r"(?m)^# 如何阅读本书$", "## 如何阅读本书", body)
         rendered = markdown.markdown(
-            body,
+            transform_callouts(body),
             extensions=MARKDOWN_EXTENSIONS,
             output_format="xhtml",
         )
@@ -133,19 +202,21 @@ def build_cover(path: Path) -> None:
 
 EPUB_CSS = """@charset "utf-8";
 html{font-size:100%;}
-body{font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",serif;line-height:1.85;color:#20272b;margin:5% 6%;}
-h1,h2,h3{font-family:"Noto Sans SC","Source Han Sans SC","PingFang SC",sans-serif;color:#172229;page-break-after:avoid;}
-h1{font-size:1.72em;line-height:1.35;margin:.2em 0 .9em;}
-h2{font-size:1.24em;margin:1.9em 0 .6em;border-bottom:1px solid #ccd3cf;padding-bottom:.22em;}
+body{font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",serif;line-height:1.72;color:#20272b;margin:0;padding:0;}
+h1,h2,h3{font-family:"Noto Sans SC","Source Han Sans SC","PingFang SC",sans-serif;color:#172229;page-break-after:avoid;letter-spacing:-.01em;overflow-wrap:anywhere;}
+h1{font-size:1.65em;line-height:1.35;margin:.1em 0 .85em;}
+h2{font-size:1.22em;margin:1.75em 0 .55em;border-bottom:1px solid #ccd3cf;padding-bottom:.2em;}
 h3{font-size:1.06em;margin:1.4em 0 .4em;color:#315f5b;}
-p{margin:0 0 1em;text-align:justify;} a{color:#315f5b;text-decoration:none;} strong{font-weight:700;}
+p{margin:0 0 .82em;text-align:justify;text-justify:inter-ideograph;orphans:2;widows:2;} a{color:#315f5b;text-decoration:none;} strong{font-weight:700;}
 ul,ol{margin:0 0 1em;padding-left:1.4em;} li{margin:.35em 0;} hr{border:0;border-top:1px solid #d5d7d3;margin:2em 0;}
 blockquote{margin:1.4em 0;padding:.2em 1em;border-left:3px solid #8da5a1;background:#f3f5f3;color:#39423e;}
 code{font-family:monospace;background:#f1f1ed;padding:.05em .25em;} pre{white-space:pre-wrap;overflow-wrap:anywhere;}
-table{border-collapse:collapse;width:100%;margin:1.4em 0;font-size:.9em;} th,td{border:1px solid #c9cecb;padding:.4em .55em;} th{background:#eef2ef;}
+img,svg{max-width:100%;height:auto;} table{border-collapse:collapse;width:100%;table-layout:fixed;margin:1.25em 0;font-size:.78em;} th,td{border:1px solid #c9cecb;padding:.3em .38em;overflow-wrap:anywhere;word-break:break-word;} th{background:#eef2ef;}
+.callout{margin:1.35em 0;padding:.72em .9em;border:1px solid #d2d7d3;border-left:4px solid #7d8780;} .callout.warn{border-left-color:#a86b24}.callout.lab{border-left-color:#39706c}.callout.points{border-left-color:#39434a}.callout.exercise{border-left-color:#9a742f;border-left-style:dashed}
+.callout>p:first-child,.callout>h3:first-child{font-family:"Noto Sans SC","Source Han Sans SC","PingFang SC",sans-serif;font-weight:700;margin-top:0;margin-bottom:.65em;color:#24312f}.callout>p:last-child,.callout>ul:last-child,.callout>ol:last-child{margin-bottom:0}
 .cover{margin:0;padding:0;text-align:center;} .cover img{display:block;width:100%;height:auto;margin:0 auto;}
 .nav ol{list-style:none;padding:0;} .nav li{padding:.35em 0;border-bottom:1px dotted #d2d5d2;}
-.footnote{font-size:.86em;color:#4e5652;} .footnote-backref{margin-left:.25em;}
+.footnote{font-size:.84em;color:#4e5652;border-top:1px solid #d5d7d3;margin-top:1.5em;padding-top:.7em;} .footnote>hr{display:none}.footnote ol{padding-left:1.25em}.footnote-backref{margin-left:.25em;} sup{line-height:0}
 """
 
 
@@ -164,7 +235,6 @@ def build_epub(sections: list[Section], cover_path: Path, output: Path) -> None:
     itemrefs = [
         '<itemref idref="cover" linear="yes"/>',
         '<itemref idref="license" linear="yes"/>',
-        '<itemref idref="nav" linear="no"/>',
     ]
     nav_items = []
     ncx_items = []
@@ -202,7 +272,7 @@ def build_epub(sections: list[Section], cover_path: Path, output: Path) -> None:
     )
     opf = f'''<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="{LANG}">
-<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">{UID}</dc:identifier><dc:title>{TITLE}</dc:title><dc:creator>{AUTHOR}</dc:creator><dc:language>{LANG}</dc:language><dc:description>写给量化交易新手的第一堂课。教育与知识分享用途，不构成投资建议。</dc:description><dc:rights>© 2026 @Ackyess；书籍内容采用 CC BY-SA 4.0</dc:rights><meta property="dcterms:modified">{modified}</meta><meta name="cover" content="cover-image"/><link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/></metadata>
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">{UID}</dc:identifier><dc:title>{TITLE}</dc:title><dc:creator>{AUTHOR}</dc:creator><dc:language>{LANG}</dc:language><dc:description>写给量化交易新手的第一堂课。教育与知识分享用途，不构成投资建议。</dc:description><dc:rights>© 2026 @Ackyess；书籍内容采用 CC BY-SA 4.0</dc:rights><meta property="dcterms:modified">{modified}</meta><meta name="cover" content="cover-image"/></metadata>
 <manifest>{manifest}</manifest><spine toc="ncx">{''.join(itemrefs)}</spine></package>'''
     container = '''<?xml version="1.0" encoding="utf-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>'''
@@ -240,8 +310,10 @@ p{margin:0 0 4.2mm;text-align:justify} strong{font-weight:700} a{color:inherit;t
 ul,ol{padding-left:1.4em;margin:0 0 4mm} li{margin:1.2mm 0} blockquote{margin:5mm 0;padding:2.5mm 4mm;border-left:1mm solid #8da5a1;background:#f3f5f3;color:#39423e;break-inside:avoid}
 hr{border:0;border-top:.25mm solid #d1d4d1;margin:8mm 0} code{font-family:Consolas,monospace;background:#f0f0ec;padding:0 .7mm} pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:8.5pt}
 table{border-collapse:collapse;width:100%;margin:5mm 0;font-size:8.7pt;break-inside:avoid} th,td{border:.25mm solid #c4cac6;padding:1.6mm 2mm} th{background:#eef2ef}
+.callout{margin:5mm 0;padding:3mm 4mm;border:.25mm solid #d2d7d3;border-left:1mm solid #7d8780;break-inside:avoid}.callout.warn{border-left-color:#a86b24}.callout.lab{border-left-color:#39706c}.callout.points{border-left-color:#39434a}.callout.exercise{border-left-color:#9a742f;border-left-style:dashed}
+.callout>p:first-child,.callout>h3:first-child{font-family:"Noto Sans SC","Source Han Sans SC","PingFang SC",sans-serif;font-weight:700;margin-top:0;margin-bottom:2.5mm;color:#24312f}.callout>p:last-child,.callout>ul:last-child,.callout>ol:last-child{margin-bottom:0}
 .colophon{break-after:page;padding-top:42mm}.colophon h1{margin-bottom:9mm}.colophon p{color:#555d59}.toc{break-after:page}.toc h1{margin-bottom:5mm}.toc ol{list-style:none;padding:0;columns:2;column-gap:9mm;font-size:8.7pt;line-height:1.35}.toc li{break-inside:avoid;border-bottom:.25mm dotted #c8cdca;padding:.7mm 0}
-.chapter{break-before:page}.chapter:first-of-type{break-before:auto}.chapter>.footnote{font-size:8.5pt;color:#555d59}
+.chapter{break-before:page}.chapter:first-of-type{break-before:auto}.chapter>.footnote{font-size:8.5pt;color:#555d59}.chapter>.footnote>hr{display:none}
 """
 
 
@@ -300,6 +372,21 @@ def validate_epub(path: Path, expected_sections: int) -> None:
         names = set(archive.namelist())
         assert "OEBPS/images/cover.png" in names and "OEBPS/nav.xhtml" in names
         assert len([name for name in names if re.fullmatch(r"OEBPS/(?:\d\d|\d\d\d)-.+\.xhtml", name)]) == expected_sections
+        opf = ElementTree.fromstring(archive.read("OEBPS/content.opf"))
+        for item in opf.findall(".//{http://www.idpf.org/2007/opf}item"):
+            target = str(PurePosixPath("OEBPS") / item.attrib["href"])
+            assert target in names, f"missing manifest asset: {target}"
+        rendered = "\n".join(
+            archive.read(name).decode("utf-8") for name in names if name.endswith(".xhtml")
+        )
+        assert not MARKER_RE.search(rendered), "emoji marker remained in EPUB"
+        expected_callouts = sum(
+            1
+            for line in SOURCE.read_text(encoding="utf-8").splitlines()
+            if MARKER_RE.search(line) and (HEADING_RE.match(line) or QUOTE_RE.match(line))
+        )
+        assert rendered.count('class="callout ') == expected_callouts
+        assert 'src="http' not in rendered, "EPUB contains a remote image"
         for name in names:
             if name.endswith((".xhtml", ".xml", ".opf", ".ncx")):
                 ElementTree.fromstring(archive.read(name))
