@@ -24,3 +24,11 @@ python -m http.server 8799
 ```bash
 python scripts/build_ebooks.py
 ```
+
+## 许可
+
+- 书稿、封面及生成的 HTML、EPUB、PDF 内容：CC BY-SA 4.0
+- 阅读器代码与构建脚本：MIT License
+- 统一署名：[@Ackyess](https://github.com/Ackyess)
+
+完整条款见 [`LICENSE`](LICENSE)。

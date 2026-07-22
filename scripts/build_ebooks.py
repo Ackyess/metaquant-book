@@ -29,7 +29,7 @@ EPUB_PATH = OUTPUT / "epub" / "诚实的量化交易-1.0.epub"
 PDF_PATH = OUTPUT / "pdf" / "诚实的量化交易-1.0.pdf"
 
 TITLE = "诚实的量化交易：写给新手的第一堂课"
-AUTHOR = "metaquant 实验室"
+AUTHOR = "@Ackyess"
 LANG = "zh-CN"
 UID = "urn:uuid:" + str(uuid.uuid5(uuid.NAMESPACE_URL, "https://quant.leooo.fun/"))
 
@@ -161,7 +161,11 @@ def build_epub(sections: list[Section], cover_path: Path, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     modified = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     items = []
-    itemrefs = ['<itemref idref="cover" linear="yes"/>', '<itemref idref="nav" linear="no"/>']
+    itemrefs = [
+        '<itemref idref="cover" linear="yes"/>',
+        '<itemref idref="license" linear="yes"/>',
+        '<itemref idref="nav" linear="no"/>',
+    ]
     nav_items = []
     ncx_items = []
     pages: dict[str, str] = {}
@@ -192,12 +196,13 @@ def build_epub(sections: list[Section], cover_path: Path, output: Path) -> None:
             '<item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>',
             '<item id="cover-image" href="images/cover.png" media-type="image/png" properties="cover-image"/>',
             '<item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>',
+            '<item id="license" href="license.xhtml" media-type="application/xhtml+xml"/>',
             *items,
         ]
     )
     opf = f'''<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="{LANG}">
-<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">{UID}</dc:identifier><dc:title>{TITLE}</dc:title><dc:creator>{AUTHOR}</dc:creator><dc:language>{LANG}</dc:language><dc:description>写给量化交易新手的第一堂课。教育与知识分享用途，不构成投资建议。</dc:description><meta property="dcterms:modified">{modified}</meta><meta name="cover" content="cover-image"/></metadata>
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">{UID}</dc:identifier><dc:title>{TITLE}</dc:title><dc:creator>{AUTHOR}</dc:creator><dc:language>{LANG}</dc:language><dc:description>写给量化交易新手的第一堂课。教育与知识分享用途，不构成投资建议。</dc:description><dc:rights>© 2026 @Ackyess；书籍内容采用 CC BY-SA 4.0</dc:rights><meta property="dcterms:modified">{modified}</meta><meta name="cover" content="cover-image"/><link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/></metadata>
 <manifest>{manifest}</manifest><spine toc="ncx">{''.join(itemrefs)}</spine></package>'''
     container = '''<?xml version="1.0" encoding="utf-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>'''
@@ -205,6 +210,10 @@ def build_epub(sections: list[Section], cover_path: Path, output: Path) -> None:
         "封面",
         '<section epub:type="cover"><img src="images/cover.png" alt="《诚实的量化交易》封面"/></section>',
         "cover",
+    )
+    license_page = xhtml_page(
+        "版权与许可",
+        '<section><h1>版权与许可</h1><p>作者：@Ackyess</p><p>© 2026 @Ackyess</p><p>本书文字、封面及生成的 EPUB/PDF 内容采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> 许可；阅读器代码与构建脚本采用 MIT License。</p><p>项目地址：<a href="https://github.com/Ackyess/metaquant-book">github.com/Ackyess/metaquant-book</a></p></section>',
     )
 
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
@@ -217,6 +226,7 @@ def build_epub(sections: list[Section], cover_path: Path, output: Path) -> None:
         archive.writestr("OEBPS/toc.ncx", ncx)
         archive.writestr("OEBPS/content.opf", opf)
         archive.writestr("OEBPS/cover.xhtml", cover)
+        archive.writestr("OEBPS/license.xhtml", license_page)
         archive.write(cover_path, "OEBPS/images/cover.png")
         for filename, content in pages.items():
             archive.writestr(f"OEBPS/{filename}", content)
@@ -230,7 +240,7 @@ p{margin:0 0 4.2mm;text-align:justify} strong{font-weight:700} a{color:inherit;t
 ul,ol{padding-left:1.4em;margin:0 0 4mm} li{margin:1.2mm 0} blockquote{margin:5mm 0;padding:2.5mm 4mm;border-left:1mm solid #8da5a1;background:#f3f5f3;color:#39423e;break-inside:avoid}
 hr{border:0;border-top:.25mm solid #d1d4d1;margin:8mm 0} code{font-family:Consolas,monospace;background:#f0f0ec;padding:0 .7mm} pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:8.5pt}
 table{border-collapse:collapse;width:100%;margin:5mm 0;font-size:8.7pt;break-inside:avoid} th,td{border:.25mm solid #c4cac6;padding:1.6mm 2mm} th{background:#eef2ef}
-.toc{break-after:page}.toc h1{margin-bottom:5mm}.toc ol{list-style:none;padding:0;columns:2;column-gap:9mm;font-size:8.7pt;line-height:1.35}.toc li{break-inside:avoid;border-bottom:.25mm dotted #c8cdca;padding:.7mm 0}
+.colophon{break-after:page;padding-top:42mm}.colophon h1{margin-bottom:9mm}.colophon p{color:#555d59}.toc{break-after:page}.toc h1{margin-bottom:5mm}.toc ol{list-style:none;padding:0;columns:2;column-gap:9mm;font-size:8.7pt;line-height:1.35}.toc li{break-inside:avoid;border-bottom:.25mm dotted #c8cdca;padding:.7mm 0}
 .chapter{break-before:page}.chapter:first-of-type{break-before:auto}.chapter>.footnote{font-size:8.5pt;color:#555d59}
 """
 
@@ -241,7 +251,8 @@ def print_html(sections: list[Section]) -> str:
         f'<section class="chapter" id="{s.slug}"><h1>{html.escape(s.title)}</h1>{s.body_html}</section>'
         for s in sections
     )
-    return f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><title>{TITLE}</title><style>{PRINT_CSS}</style></head><body><nav class="toc"><h1>目录</h1><ol>{toc}</ol></nav>{chapters}</body></html>'''
+    colophon = '<section class="colophon"><h1>版权与许可</h1><p>作者：@Ackyess</p><p>© 2026 @Ackyess</p><p>本书文字、封面及生成的 EPUB/PDF 内容采用 CC BY-SA 4.0 许可；阅读器代码与构建脚本采用 MIT License。</p><p>github.com/Ackyess/metaquant-book</p></section>'
+    return f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><title>{TITLE}</title><style>{PRINT_CSS}</style></head><body>{colophon}<nav class="toc"><h1>目录</h1><ol>{toc}</ol></nav>{chapters}</body></html>'''
 
 
 def build_pdf(sections: list[Section], cover_path: Path, output: Path) -> None:
@@ -275,7 +286,7 @@ def build_pdf(sections: list[Section], cover_path: Path, output: Path) -> None:
         writer = PdfWriter()
         writer.append(str(cover_pdf))
         writer.append(str(content_pdf))
-        writer.add_metadata({"/Title": TITLE, "/Author": AUTHOR, "/Subject": "量化交易入门"})
+        writer.add_metadata({"/Title": TITLE, "/Author": AUTHOR, "/Subject": "量化交易入门", "/Copyright": "© 2026 @Ackyess；书籍内容采用 CC BY-SA 4.0"})
         with output.open("wb") as target:
             writer.write(target)
 
