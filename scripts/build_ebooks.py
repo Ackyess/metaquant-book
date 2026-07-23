@@ -19,7 +19,6 @@ from pathlib import PurePosixPath
 from xml.etree import ElementTree
 
 import markdown
-from PIL import Image, ImageDraw, ImageFont
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import NameObject, TextStringObject
@@ -33,6 +32,7 @@ EN_READER = ROOT / "en" / "index.html"
 OUTPUT = ROOT / "output"
 EPUB_PATH = OUTPUT / "epub" / "诚实的量化交易-1.0.epub"
 PDF_PATH = OUTPUT / "pdf" / "诚实的量化交易-1.0.pdf"
+COVER_PATH = ROOT / "assets" / "cover-ai-v2.png"
 
 TITLE = "诚实的量化交易：写给新手的第一堂课"
 AUTHOR = "@Ackyess"
@@ -165,44 +165,9 @@ def split_sections(source: str) -> list[Section]:
     return sections
 
 
-def font(name: str, size: int) -> ImageFont.FreeTypeFont:
-    path = Path("C:/Windows/Fonts") / name
-    if not path.exists():
-        raise FileNotFoundError(path)
-    return ImageFont.truetype(str(path), size)
-
-
 def build_cover(path: Path) -> None:
-    width, height = 1600, 2400
-    image = Image.new("RGB", (width, height), "#0d141c")
-    draw = ImageDraw.Draw(image)
-
-    for y in range(height):
-        t = y / height
-        draw.line((0, y, width, y), fill=(13 + int(8 * t), 20 + int(10 * t), 28 + int(14 * t)))
-
-    brass, teal, paper = "#c99b4a", "#609c98", "#eee8d8"
-    draw.rectangle((72, 72, width - 72, height - 72), outline="#765f38", width=3)
-    draw.rectangle((91, 91, width - 91, height - 91), outline="#3f433e", width=2)
-    draw.text((width / 2, 315), "量 化 交 易 入 门", font=font("NotoSansSC-VF.ttf", 42), fill=teal, anchor="mm")
-    draw.text((width / 2, 690), "诚实的", font=font("NotoSerifSC-VF.ttf", 198), fill=paper, anchor="mm")
-    draw.text((width / 2, 925), "量化交易", font=font("NotoSerifSC-VF.ttf", 198), fill=paper, anchor="mm")
-    draw.line((555, 1070, 1045, 1070), fill=brass, width=4)
-    draw.text((width / 2, 1165), "写给新手的第一堂课", font=font("NotoSansSC-VF.ttf", 62), fill=brass, anchor="mm")
-
-    points = []
-    for index in range(21):
-        x = 180 + index * 62
-        y = 1770 - index * 19 + (18 if index % 3 == 0 else -12 if index % 3 == 1 else 4)
-        points.append((x, y))
-    draw.line(points, fill=brass, width=7, joint="curve")
-    for x, y in points[::4]:
-        draw.ellipse((x - 5, y - 5, x + 5, y + 5), fill=brass)
-
-    draw.text((width / 2, 2100), "悲观者的工具，乐观者的心", font=font("NotoSerifSC-VF.ttf", 52), fill="#c8ccc7", anchor="mm")
-    draw.text((width / 2, 2220), AUTHOR, font=font("NotoSansSC-VF.ttf", 38), fill="#7f8885", anchor="mm")
     path.parent.mkdir(parents=True, exist_ok=True)
-    image.save(path, optimize=True)
+    path.write_bytes(COVER_PATH.read_bytes())
 
 
 EPUB_CSS = """@charset "utf-8";

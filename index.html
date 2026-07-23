@@ -4,9 +4,50 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="book-version" content="1.0"/>
-<meta name="source-sha256" content="f8dd8c99bfaa03d6363fb21be03dd38eea9c763dce419139c22485c7bf4667c9"/>
-<meta name="source-file" content="诚实的量化交易-GPT 修订稿-手工修订.md"/>
+<meta name="source-sha256" content="acd021d6f726a39118bc3b500215cd11e3aa7124a577afa0d26f8386dc806a96"/>
+<meta name="source-file" content="book.md"/>
+<meta name="description" content="《诚实的量化交易》是一部写给新手的量化交易入门读物：从市场、数据与回测，到风险、实盘与研究纪律。"/>
+<meta name="robots" content="index,follow"/>
+<meta name="theme-color" content="#07151e"/>
+<link rel="canonical" href="https://quant.leooo.fun/"/>
+<link rel="alternate" hreflang="zh-CN" href="https://quant.leooo.fun/"/>
+<link rel="alternate" hreflang="en" href="https://quant.leooo.fun/en/"/>
+<link rel="alternate" hreflang="x-default" href="https://quant.leooo.fun/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="诚实的量化交易"/>
+<meta property="og:locale" content="zh_CN"/>
+<meta property="og:locale:alternate" content="en_US"/>
+<meta property="og:title" content="诚实的量化交易：写给新手的第一堂课"/>
+<meta property="og:description" content="先学会不死，再谈赢。一部从研究方法走到真实交易纪律的量化入门读物。"/>
+<meta property="og:url" content="https://quant.leooo.fun/"/>
+<meta property="og:image" content="https://quant.leooo.fun/assets/cover-ai-v2.png"/>
+<meta property="og:image:width" content="1024"/>
+<meta property="og:image:height" content="1536"/>
+<meta property="og:image:alt" content="《诚实的量化交易》深海蓝封面"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="诚实的量化交易：写给新手的第一堂课"/>
+<meta name="twitter:description" content="先学会不死，再谈赢。一部从研究方法走到真实交易纪律的量化入门读物。"/>
+<meta name="twitter:image" content="https://quant.leooo.fun/assets/cover-ai-v2.png"/>
 <link rel="icon" href="data:,"/>
+<link rel="preload" as="image" href="assets/paper-handmade-v1.webp" type="image/webp" fetchpriority="high"/>
+<script>
+(function(){
+  if(location.search==="?switch=1")history.replaceState(null,"",location.pathname+location.hash);
+  if(!("serviceWorker" in navigator)||!("caches" in window)||!window.isSecureContext)return;
+  var target="/en/",cacheName="mq-language-v1";
+  var warmAlternate=caches.open(cacheName).then(function(cache){
+    return cache.delete(target).then(function(){
+      return fetch(target,{cache:"reload",priority:"low"}).then(function(response){
+        if(response.ok)return cache.put(target,response);
+      });
+    });
+  });
+  Promise.all([
+    navigator.serviceWorker.register("/sw.js").then(function(){return navigator.serviceWorker.ready;}),
+    warmAlternate
+  ]).catch(function(){});
+})();
+</script>
 <title>诚实的量化交易 1.0：写给新手的第一堂课</title>
 </head>
 <body>
@@ -16,7 +57,8 @@
  --sans:"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;
  --mono:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,monospace;
  --paper:#ece7da;--panel:#f3eee2;--raise:#faf7ef;
- --ink:#212a2e;--ink-soft:#586259;--faint:#8b948c;
+ --paper-grain:url("assets/paper-handmade-v1.webp");--thread-fiber-mask:url("assets/thread-fiber-mask.svg");--ink-edge-mask:url("assets/ink-edge-mask.svg");
+ --ink:#212a2e;--ink-soft:#586259;--faint:#5f6961;
  --line:rgba(33,42,46,.14);--line-strong:rgba(33,42,46,.24);
  --brass:#9d7328;--brass-bright:#b5852f;--sea:#2c5c58;
  --c-warn:#a4611a;--c-lab:#2c5c58;--c-points:#2b333a;--c-exercise:#9d7328;
@@ -25,7 +67,7 @@
 }
 @media (prefers-color-scheme:dark){:root{
  --paper:#0f151c;--panel:#151d26;--raise:#1b2531;
- --ink:#e8e2d4;--ink-soft:#9aa39b;--faint:#6c756e;
+ --ink:#e8e2d4;--ink-soft:#aab3ab;--faint:#8c968e;
  --line:rgba(232,226,212,.12);--line-strong:rgba(232,226,212,.2);
  --brass:#cfa050;--brass-bright:#e2b466;--sea:#5fa39f;
  --c-warn:#d69a44;--c-lab:#5fa39f;--c-points:#c7cdc4;--c-exercise:#cfa050;
@@ -34,7 +76,7 @@
 }}
 :root[data-theme="light"]{
  --paper:#ece7da;--panel:#f3eee2;--raise:#faf7ef;
- --ink:#212a2e;--ink-soft:#586259;--faint:#8b948c;
+ --ink:#212a2e;--ink-soft:#586259;--faint:#5f6961;
  --line:rgba(33,42,46,.14);--line-strong:rgba(33,42,46,.24);
  --brass:#9d7328;--brass-bright:#b5852f;--sea:#2c5c58;
  --c-warn:#a4611a;--c-lab:#2c5c58;--c-points:#2b333a;--c-exercise:#9d7328;
@@ -43,7 +85,7 @@
 }
 :root[data-theme="dark"]{
  --paper:#0f151c;--panel:#151d26;--raise:#1b2531;
- --ink:#e8e2d4;--ink-soft:#9aa39b;--faint:#6c756e;
+ --ink:#e8e2d4;--ink-soft:#aab3ab;--faint:#8c968e;
  --line:rgba(232,226,212,.12);--line-strong:rgba(232,226,212,.2);
  --brass:#cfa050;--brass-bright:#e2b466;--sea:#5fa39f;
  --c-warn:#d69a44;--c-lab:#5fa39f;--c-points:#c7cdc4;--c-exercise:#cfa050;
@@ -75,11 +117,9 @@ body{background:var(--paper);color:var(--ink);font-family:var(--serif);-webkit-f
 .toc-no{font-family:var(--mono);font-size:11px;color:var(--brass);min-width:22px;flex:none;text-align:right;}
 .toc-a.active .toc-no{color:var(--brass-bright);}
 .toc-t{overflow:hidden;text-overflow:ellipsis;}
-.main{grid-area:main;overflow-y:auto;position:relative;scrollbar-width:none;-ms-overflow-style:none;}.main::-webkit-scrollbar{display:none;}
+.main{grid-area:main;overflow-y:auto;position:relative;background-color:var(--paper);background-image:var(--paper-grain);background-size:720px 720px;background-attachment:local;background-blend-mode:normal;scrollbar-width:none;-ms-overflow-style:none;}.main::-webkit-scrollbar{display:none;}
 .screen{display:none;}
 .screen.active{display:block;}
-@media (prefers-reduced-motion:no-preference){.screen.active{animation:fade .34s ease;}}
-@keyframes fade{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:none;}}
 .wrap{max-width:41rem;margin:0 auto;padding:48px 26px 8px;}
 .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.13em;color:var(--brass);margin:0 0 16px;text-transform:uppercase;display:flex;gap:11px;align-items:center;}
 .kicker .dot{width:5px;height:5px;border-radius:50%;background:var(--brass);flex:none;}
@@ -101,15 +141,22 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 .content th,.content td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:.55em .75em;text-align:left;vertical-align:top;}
 .content tr>*:last-child{border-right:none;}
 .content th{background:color-mix(in srgb,var(--sea) 13%,transparent);font-weight:700;}
-.content blockquote{margin:1.7em 0;border-left:3px solid var(--line-strong);padding-left:1.1em;color:var(--ink-soft);}
-.content .callout{margin:1.8em 0;border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:0 11px 11px 0;background:var(--raise);padding:15px 20px 15px 22px;box-shadow:var(--shadow);color:var(--ink);}
+.content blockquote{position:relative;margin:1.7em 0;padding-left:1.1em;color:var(--ink-soft);}
+.content blockquote::before{content:"";position:absolute;top:-1px;bottom:-1px;left:0;width:5px;background:color-mix(in srgb,var(--ink-soft) 72%,var(--brass));-webkit-mask:var(--ink-edge-mask) center top/100% 128px repeat-y;mask:var(--ink-edge-mask) center top/100% 128px repeat-y;mix-blend-mode:multiply;pointer-events:none;}
+.content .callout::before{content:"";position:absolute;top:-1px;bottom:-1px;pointer-events:none;mix-blend-mode:multiply;}
+.content .callout{--edge-color:var(--faint);position:relative;margin:1.8em 0;border:1px solid var(--line);border-left:0;border-radius:0 11px 11px 0;background:var(--raise);padding:15px 20px 15px 22px;box-shadow:var(--shadow);color:var(--ink);}
+:root[data-theme="dark"] .content blockquote::before,:root[data-theme="dark"] .content .callout::before{mix-blend-mode:normal;}
 .content .callout>p:first-child{margin-top:0;}
 .content .callout>p:last-child,.content .callout>ul:last-child,.content .callout>ol:last-child{margin-bottom:0;}
 .content .callout>p:first-child strong{font-family:var(--sans);letter-spacing:.02em;font-size:1em;}
-.callout.warn{border-left-color:var(--c-warn);background:color-mix(in srgb,var(--c-warn) 9%,var(--raise));}
-.callout.lab{border-left-color:var(--c-lab);background:color-mix(in srgb,var(--c-lab) 9%,var(--raise));}
-.callout.points{border-left-color:var(--c-points);background:color-mix(in srgb,var(--ink) 4%,var(--raise));}
-.callout.exercise{border-left-color:var(--c-exercise);border-left-style:dashed;background:color-mix(in srgb,var(--c-exercise) 8%,var(--raise));}
+.callout.warn{--edge-color:var(--c-warn);border-radius:0 3px 3px 0;background:color-mix(in srgb,var(--c-warn) 9%,var(--raise));box-shadow:2px 3px 0 color-mix(in srgb,var(--c-warn) 10%,transparent);}
+.callout.warn::before{left:-2px;width:7px;background:var(--edge-color);-webkit-mask:var(--ink-edge-mask) center top/100% 128px repeat-y;mask:var(--ink-edge-mask) center top/100% 128px repeat-y;filter:drop-shadow(.6px .5px .3px color-mix(in srgb,var(--edge-color) 36%,transparent));}
+.callout.lab{--edge-color:var(--c-lab);background:color-mix(in srgb,var(--c-lab) 9%,var(--raise));}
+.callout.lab::before{left:-8px;width:16px;background:repeating-linear-gradient(145deg,color-mix(in srgb,var(--edge-color) 38%,#e2c48b) 0 2px,color-mix(in srgb,var(--edge-color) 58%,#9b7442) 2px 5px,color-mix(in srgb,var(--edge-color) 56%,#49321f) 5px 7px,color-mix(in srgb,var(--edge-color) 58%,#9b7442) 7px 9px);-webkit-mask:var(--thread-fiber-mask) center top/100% 160px repeat-y;mask:var(--thread-fiber-mask) center top/100% 160px repeat-y;filter:drop-shadow(1px 1px .7px color-mix(in srgb,var(--ink) 32%,transparent));}
+.callout.points{--edge-color:var(--c-points);border-radius:0;background:color-mix(in srgb,var(--ink) 4%,var(--raise));box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 13%,transparent);}
+.callout.points::before{left:-1px;width:8px;background:linear-gradient(90deg,var(--edge-color) 0 2px,transparent 2px 4px,color-mix(in srgb,var(--edge-color) 55%,var(--brass)) 4px 5px,transparent 5px);opacity:.86;}
+.callout.exercise{--edge-color:var(--c-exercise);border-style:dashed;border-left:0;border-radius:0 8px 8px 0;background:color-mix(in srgb,var(--c-exercise) 8%,var(--raise));box-shadow:none;}
+.callout.exercise::before{left:-7px;width:14px;background:repeating-linear-gradient(to bottom,color-mix(in srgb,var(--edge-color) 42%,#e2c48b) 0 10px,transparent 10px 16px);-webkit-mask:var(--thread-fiber-mask) center top/100% 160px repeat-y;mask:var(--thread-fiber-mask) center top/100% 160px repeat-y;filter:drop-shadow(.8px .8px .5px color-mix(in srgb,var(--ink) 28%,transparent));}
 .pager{max-width:41rem;margin:20px auto 0;padding:22px 26px 64px;display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);}
 .reader.on-cover .pager{display:none;}
 .pbtn{font-family:var(--sans);color:var(--ink);background:var(--panel);border:1px solid var(--line-strong);border-radius:11px;padding:11px 16px;cursor:pointer;display:flex;flex-direction:column;gap:3px;min-width:0;max-width:47%;overflow:hidden;}
@@ -129,11 +176,22 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 .cover-thesis{font-family:var(--serif);font-size:clamp(15px,2.15vw,18px);line-height:1.9;color:var(--ink-soft);margin:0 auto 34px;max-width:31em;text-align:justify;}
 .cover-cta{font-family:var(--sans);font-weight:600;font-size:15px;color:var(--paper);background:var(--ink);border:none;border-radius:999px;padding:14px 32px;cursor:pointer;letter-spacing:.05em;box-shadow:var(--shadow);}
 .cover-cta:hover{background:var(--sea);color:#fff;}
-.cover-downloads{font-family:var(--mono);font-size:11px;color:var(--faint);margin:16px 0 0;letter-spacing:.04em;}
+.cover-downloads{font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--faint);margin:16px 0 0;letter-spacing:.025em;}
 .cover-downloads a{color:var(--brass);font-weight:700;text-decoration:none;padding:5px 7px;border-radius:6px;}
 .cover-downloads a:hover,.cover-downloads a:focus-visible{background:color-mix(in srgb,var(--brass) 12%,transparent);color:var(--brass-bright);}
 .cover-downloads span{padding:0 2px;color:var(--line-strong);}
+.cover-downloads .download-row{display:block;}
+.cover-downloads .download-row strong{color:var(--ink-soft);font-weight:700;}
 .cover-motto{font-family:var(--serif);font-style:italic;color:var(--faint);margin:28px 0 0;font-size:15px;letter-spacing:.02em;}
+.cover-transition{position:fixed;inset:56px 0 0;z-index:75;display:grid;place-items:center;visibility:hidden;opacity:0;pointer-events:none;background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:blur(9px);perspective:1400px;}
+.cover-transition-book{width:clamp(178px,24vw,248px);aspect-ratio:2/3;transform-style:preserve-3d;filter:drop-shadow(0 28px 28px rgba(2,9,14,.32));}
+.cover-transition-book img{display:block;width:100%;height:100%;object-fit:cover;border-radius:3px 8px 8px 3px;}
+.cover-transition.is-opening{visibility:visible;animation:openingVeil .76s ease both;}
+.cover-transition.is-opening .cover-transition-book{animation:openingBook .76s cubic-bezier(.22,1,.36,1) both;}
+@keyframes openingVeil{0%{opacity:0;}18%,72%{opacity:1;}100%{opacity:0;}}
+@keyframes openingBook{0%{opacity:0;transform:translateY(36px) scale(.58) rotateY(0);}36%{opacity:1;transform:translateY(0) scale(1) rotateY(-5deg);}76%{opacity:1;transform:translateX(-12%) scale(1.04) rotateY(-68deg);}100%{opacity:0;transform:translateX(-38%) scale(1.08) rotateY(-92deg);}}
+.main:focus{outline:none;}
+@media (prefers-reduced-motion:reduce){.cover-transition,.cover-transition-book{animation:none!important;}}
 @media (max-width:820px){
  .reader{grid-template-columns:1fr;grid-template-areas:"bar" "main";}
  .sidebar{position:fixed;top:56px;bottom:0;left:0;width:min(84vw,320px);z-index:50;transform:translateX(-102%);transition:transform .28s ease;box-shadow:var(--shadow);}
@@ -149,8 +207,12 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 .footnote-ref{appearance:none;border:0;background:transparent;display:inline-flex;align-items:center;justify-content:center;min-width:1.35em;height:1.35em;margin:0 .06em 0 .12em;padding:0 .28em;border-radius:999px;font:700 .66em/1 var(--mono);color:var(--brass);vertical-align:super;cursor:pointer;transform:translateY(-.08em);transition:color .16s ease,background .16s ease,transform .16s ease;}.footnote-ref:hover,.footnote-ref:focus-visible,.footnote-ref[aria-expanded="true"]{color:var(--ink);background:color-mix(in srgb,var(--brass) 17%,transparent);outline:none;transform:translateY(-.12em);}.footnote-ref:focus-visible{box-shadow:0 0 0 1px var(--brass);}.footnote-card{position:fixed;z-index:80;width:min(360px,calc(100vw - 32px));padding:15px 17px 16px;border:1px solid var(--line-strong);border-radius:16px;background:color-mix(in srgb,var(--panel) 96%,var(--ink) 4%);box-shadow:var(--shadow);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(7px) scale(.985);transition:opacity .16s ease,transform .2s cubic-bezier(.22,1,.36,1),visibility .2s;}.footnote-card.visible{opacity:1;visibility:visible;pointer-events:auto;transform:none;}.footnote-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:7px;}.footnote-head small{font:600 10px/1.2 var(--mono);letter-spacing:.1em;color:var(--brass);}.footnote-close{appearance:none;width:27px;height:27px;padding:0;border:0;border-radius:8px;background:transparent;color:var(--faint);font:400 20px/1 var(--sans);cursor:pointer;}.footnote-close:hover,.footnote-close:focus-visible{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink);outline:none;}.footnote-card p{margin:0;color:var(--ink);font:400 14px/1.72 var(--sans);text-wrap:pretty;}@media (max-width:820px){.footnote-card{left:12px!important;right:12px;top:auto!important;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:auto;max-height:min(42dvh,320px);overflow:auto;border-radius:18px;transform:translateY(16px);}.footnote-card.visible{transform:none;}}@media (prefers-reduced-motion:reduce){.footnote-ref,.footnote-card{transition:none;}}
 
 #00-preface>.wrap{max-width:none;padding:0 0 8px;}.preface-book-stage{min-height:max(390px,calc((100dvh - 56px)*.66));display:grid;place-items:center;overflow:hidden;padding:26px;perspective:1100px;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 50% 82%,color-mix(in srgb,var(--brass) 12%,transparent),transparent 43%),linear-gradient(180deg,color-mix(in srgb,var(--panel) 58%,var(--paper)),var(--paper));}.preface-prose{max-width:41rem;margin:0 auto;padding:36px 26px 8px;}.book-volume{position:relative;width:clamp(205px,25vw,270px);aspect-ratio:2/3;transform-style:preserve-3d;filter:drop-shadow(0 24px 24px rgba(2,9,14,.27));transition:transform .45s cubic-bezier(.22,1,.36,1),filter .45s ease;}.book-volume::before{content:"";position:absolute;z-index:0;inset:7px -7px -6px 8px;border-radius:2px 8px 8px 3px;background:linear-gradient(90deg,#b9b29f,#eee9db 14%,#c9c1ae 96%);box-shadow:inset -1px 0 rgba(58,49,34,.24),inset 0 -2px rgba(58,49,34,.18);transform:translateZ(-4px);}.book-volume::after{content:"";position:absolute;z-index:-1;left:7%;right:-10%;bottom:-9%;height:12%;border-radius:50%;background:rgba(0,0,0,.3);filter:blur(13px);transform:rotate(-1deg);}.book-jacket{position:absolute;z-index:1;inset:0;overflow:hidden;border:1px solid rgba(163,190,194,.22);border-radius:3px 8px 8px 3px;background:radial-gradient(circle at 72% 20%,rgba(47,91,96,.28),transparent 32%),linear-gradient(145deg,#102631 0%,#07151e 54%,#06111a 100%);box-shadow:inset 1px 0 rgba(255,255,255,.16),inset -2px 0 rgba(0,0,0,.45),inset 0 0 38px rgba(0,0,0,.25);transform:rotateY(-5deg);transform-origin:left center;}.book-spine{position:absolute;z-index:2;inset:0 auto 0 0;width:14px;background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(41,74,82,.5) 52%,rgba(255,255,255,.09) 82%,rgba(0,0,0,.28));box-shadow:2px 0 5px rgba(0,0,0,.42);}.book-frame{position:absolute;z-index:1;inset:14px 12px 13px 20px;border:1px solid rgba(97,141,143,.34);box-shadow:inset 0 0 0 3px rgba(5,14,21,.34);display:flex;flex-direction:column;align-items:center;text-align:center;padding:11% 8% 7%;color:#e7e1d3;}.book-series{font:600 clamp(6px,.58vw,8px)/1 var(--mono);letter-spacing:.42em;color:#6caaa5;padding-left:.42em;white-space:nowrap;}.book-name{margin-top:17%;font:700 clamp(29px,3.1vw,40px)/1.17 var(--serif);letter-spacing:.06em;text-shadow:0 2px 5px rgba(0,0,0,.55);}.book-rule{width:46%;height:1px;margin:7% 0 5%;background:#b78836;box-shadow:0 0 7px rgba(183,136,54,.35);}.book-subtitle{font:600 clamp(7px,.72vw,10px)/1.4 var(--sans);letter-spacing:.1em;color:#c89945;}.book-chart{width:100%;margin:auto 0 7%;overflow:visible;}.book-chart path{fill:none;stroke:#b48635;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 3px rgba(180,134,53,.45));}.book-motto-line{font:500 clamp(6px,.58vw,8px)/1.3 var(--sans);letter-spacing:.08em;color:#c5c3b8;}.book-volume:hover{transform:translateY(-7px) rotateY(2deg);filter:drop-shadow(0 31px 28px rgba(2,9,14,.32));}@media (prefers-reduced-motion:no-preference){#00-preface.active .book-volume{animation:prefaceBookIn .7s cubic-bezier(.22,1,.36,1) both;}@keyframes prefaceBookIn{from{opacity:0;transform:translateY(16px) rotateY(-5deg) scale(.97);}to{opacity:1;transform:none;}}}@media (max-width:600px){.preface-book-stage{padding:22px 18px;}.preface-prose{padding:30px 22px 8px;}.book-volume{width:clamp(198px,54vw,224px);}}@media (prefers-reduced-motion:reduce){.book-volume{transition:none;}}
+.book-volume{transform:rotateX(2deg) rotateY(-8deg)}.book-volume::before{inset:8px -12px -9px 10px;background:repeating-linear-gradient(0deg,rgba(75,62,39,.13) 0 1px,transparent 1px 3px),linear-gradient(90deg,#aaa18c,#f0e9d8 13%,#cec4ae 95%);box-shadow:inset -1px 0 rgba(58,49,34,.3),inset 0 -2px rgba(58,49,34,.22),4px 4px 8px rgba(30,24,16,.16);transform:translateZ(-10px)}.book-volume::after{left:3%;right:-16%;bottom:-11%;height:15%;filter:blur(16px);transform:translateZ(-18px) rotate(-2deg)}.book-jacket{background:#07151e url("assets/cover-ai-v2.png") center/cover no-repeat;transform:translateZ(5px);box-shadow:inset 1px 0 rgba(255,255,255,.2),inset -3px 0 rgba(0,0,0,.48),inset 0 0 30px rgba(0,0,0,.18),4px 3px 0 #061018,8px 6px 0 rgba(7,21,30,.42)}.book-jacket::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,.12),transparent 18% 72%,rgba(0,0,0,.2));mix-blend-mode:soft-light;pointer-events:none}.book-frame{display:none}.book-spine{display:block;width:18px}.book-volume:hover{transform:translateY(-7px) rotateX(1deg) rotateY(-2deg)}@keyframes prefaceBookIn{from{opacity:0;transform:translateY(18px) rotateX(5deg) rotateY(-14deg) scale(.96)}to{opacity:1;transform:rotateX(2deg) rotateY(-8deg)}}.preface-book-stage{position:relative}.preface-book-stage::before{content:"";position:absolute;inset:0;background:var(--paper-grain);background-size:720px 720px;mix-blend-mode:multiply;opacity:.32;pointer-events:none}:root[data-theme="dark"] .main{background-blend-mode:multiply}:root[data-theme="dark"] .preface-book-stage::before{mix-blend-mode:soft-light;opacity:.3}@media (prefers-color-scheme:dark){:root:not([data-theme]) .main{background-blend-mode:multiply}:root:not([data-theme]) .preface-book-stage::before{mix-blend-mode:soft-light;opacity:.3}}
+.book-volume::before{inset:9px -18px -13px 12px;border:1px solid rgba(95,78,48,.24);border-left:0}.book-volume::after{z-index:0;left:12px;right:-15px;bottom:-13px;height:14px;border-radius:0 0 8px 3px;background:repeating-linear-gradient(90deg,rgba(75,62,39,.15) 0 1px,transparent 1px 4px),linear-gradient(180deg,#eee7d5,#b8ae97);box-shadow:0 13px 18px rgba(28,22,14,.24);filter:none;transform:translateZ(-7px)}.book-jacket{box-shadow:inset 1px 0 rgba(255,255,255,.2),inset -3px 0 rgba(0,0,0,.48),inset 0 0 30px rgba(0,0,0,.18),2px 1px 0 #061018}
+.content,h1.title{color:color-mix(in srgb,var(--ink) 78%,transparent);-webkit-text-stroke:.009em color-mix(in srgb,var(--ink) 38%,transparent);text-shadow:.023em .015em .016em color-mix(in srgb,var(--ink) 34%,transparent),-.011em .021em .045em color-mix(in srgb,var(--ink) 22%,transparent);mix-blend-mode:multiply}:root[data-theme="dark"] .content,:root[data-theme="dark"] h1.title{color:var(--ink);-webkit-text-stroke:0;text-shadow:none;mix-blend-mode:normal}@media (prefers-color-scheme:dark){:root:not([data-theme]) .content,:root:not([data-theme]) h1.title{color:var(--ink);-webkit-text-stroke:0;text-shadow:none;mix-blend-mode:normal}}
+.topbar,.sidebar,.pbtn,.iconbtn{background-color:var(--panel);background-image:linear-gradient(color-mix(in srgb,var(--panel) 58%,transparent),color-mix(in srgb,var(--panel) 58%,transparent)),var(--paper-grain);background-size:auto,720px 720px}.topbar{backdrop-filter:none;border-bottom-color:color-mix(in srgb,var(--ink) 16%,transparent)}.sidebar{background-attachment:local;box-shadow:inset -1px 0 color-mix(in srgb,var(--ink) 8%,transparent)}.reader.nav-collapsed .sidebar{background-color:var(--panel);background-image:linear-gradient(color-mix(in srgb,var(--panel) 58%,transparent),color-mix(in srgb,var(--panel) 58%,transparent)),var(--paper-grain);background-size:auto,720px 720px}.iconbtn{border-radius:4px;box-shadow:0 1px 0 color-mix(in srgb,var(--ink) 10%,transparent)}.toc-a.active{border-radius:2px 6px 6px 2px;box-shadow:inset 2px 0 var(--brass)}.pbtn{border-radius:3px;box-shadow:1px 2px 0 color-mix(in srgb,var(--ink) 12%,transparent);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}.pbtn:hover{transform:translateY(-1px);box-shadow:1px 3px 0 color-mix(in srgb,var(--ink) 14%,transparent)}:root[data-theme="dark"] :is(.topbar,.sidebar,.pbtn,.iconbtn),:root[data-theme="dark"] .reader.nav-collapsed .sidebar{background-image:linear-gradient(color-mix(in srgb,var(--panel) 88%,transparent),color-mix(in srgb,var(--panel) 88%,transparent)),var(--paper-grain)}@media (prefers-color-scheme:dark){:root:not([data-theme]) :is(.topbar,.sidebar,.pbtn,.iconbtn),:root:not([data-theme]) .reader.nav-collapsed .sidebar{background-image:linear-gradient(color-mix(in srgb,var(--panel) 88%,transparent),color-mix(in srgb,var(--panel) 88%,transparent)),var(--paper-grain)}}@media (min-width:900px){.term-pair{display:inline-block;white-space:nowrap;font-size:.96em;letter-spacing:-.01em}}
 </style>
-<div class="reader" id="reader"><div class="progress"><span id="prog"></span></div><header class="topbar"><button class="iconbtn menu" id="menuBtn" aria-label="开关目录" aria-controls="sidebar" aria-expanded="true">&#9776;</button><div class="brand" id="brandHome" role="button" tabindex="0"><b>诚实的量化交易 · 1.0</b><span class="brand-sub" id="nowTitle"></span></div><div class="spacer"></div><a class="iconbtn langbtn" id="langBtn" href="en/" hreflang="en" lang="en" aria-label="Read in English" title="English">EN</a><button class="iconbtn" id="themeBtn" aria-label="切换深浅色">&#9680;</button></header><nav class="sidebar" id="sidebar" aria-label="目录"><div class="toc-group"><div class="toc-label">卷首</div>
+<div class="reader" id="reader"><div class="progress"><span id="prog"></span></div><header class="topbar"><button class="iconbtn menu" id="menuBtn" aria-label="开关目录" aria-controls="sidebar" aria-expanded="true">&#9776;</button><div class="brand" id="brandHome" role="button" tabindex="0"><b>诚实的量化交易 · 1.0</b><span class="brand-sub" id="nowTitle"></span></div><div class="spacer"></div><a class="iconbtn langbtn" id="langBtn" href="en/?switch=1" hreflang="en" lang="en" aria-label="Read in English" title="English">EN</a><button class="iconbtn" id="themeBtn" aria-label="切换深浅色">&#9680;</button></header><nav class="sidebar" id="sidebar" aria-label="目录"><div class="toc-group"><div class="toc-label">卷首</div>
 <a class="toc-a" role="link" tabindex="0" data-target="00-preface"><span class="toc-no">00</span><span class="toc-t">前言</span></a>
 </div>
 <div class="toc-group"><div class="toc-label">第一部 · 这是什么游戏</div>
@@ -246,7 +308,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <p>量化交易员做的，就是后者的事。他不预测未来，他管理概率。这句话你现在可能还没感觉，但等你读完这一章，我希望它会变成你看待这门手艺的底色。</p>
 <h2>什么是量化交易：把「盘感」换成「规则+数据」</h2>
 <p>我们先把名词讲清楚。</p>
-<p><strong>量化交易（quantitative trading）</strong>和<strong>系统化交易（systematic trading）</strong>高度重叠，但并不完全是同义词。前者强调数据、模型与计算，后者强调决策按预先写好的系统执行。本书为了让新手好读，统一用「量化交易」作宽泛称呼：用明确的规则加上数据，决定什么时候买、什么时候卖，而不是临场靠「感觉」。</p>
+<p><span class="term-pair"><strong>量化交易（quantitative trading）</strong>和<strong>系统化交易（systematic trading）</strong></span>高度重叠，但并不完全是同义词。前者强调数据、模型与计算，后者强调决策按预先写好的系统执行。本书为了让新手好读，统一用「量化交易」作宽泛称呼：用明确的规则加上数据，决定什么时候买、什么时候卖，而不是临场靠「感觉」。</p>
 <p>我用一个生活比喻。你家巷口有个卖了三十年水果的老板，他不用任何仪器，手一掂就知道这颗西瓜甜不甜——这叫「盘感」，是老师傅用几十年经验养出来的直觉。它很厉害，但有三个麻烦：第一，你问他为什么这颗甜，他多半说不清楚；第二，他今天心情不好、或昨晚没睡好，手感可能就不准了；第三，这套本事没办法教给别人，他退休了也就没了。</p>
 <p>量化交易，是把「掂西瓜」这件事，改成一套写得出来的规则：「重量超过 5 公斤、敲起来声音低沉、表皮纹路清晰——三个条件都满足，就判断它甜。」这套规则有什么好处？它写得出来，所以能检查；它不看心情，所以不会临场变脸；只要数据、代码与执行条件相同，换一个人或一台电脑，就能得到可复核的结果。</p>
 <p>在市场里，这套「规则」决定的不是西瓜甜不甜，而是「现在该买、该卖、还是该按兵不动」。而喂给规则的「数据」，就是价格、成交量、时间这些市场留下的痕迹。</p>
@@ -554,8 +616,8 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <li><strong>算一笔账。</strong>假设某标的的卖方订单簿是：50.0 元有 100 股、50.1 元有 100 股、50.2 元有 100 股。如果你下一张市价单、要一次买 250 股，你的平均成交价会是多少？（提示：一层一层往上吃。）算完后再想想：如果你只买 50 股，均价又是多少？这中间的差距，就是「一次买太多」要付的隐形代价。</li>
 </ol>
 </div></div></div></section>
-<section class="screen" id="05-data-lifeblood" data-title="数据是命根子：干净数据与前视偏差"><div class="wrap"><p class="kicker"><span class="dot"></span>第二部 · 市场与数据的地基　·　第 5 章</p><h1 class="title">数据是命根子：干净数据与前视偏差</h1><div class="content"><p>想象你要横渡一片陌生的海。你请了最厉害的领航员，备了最坚固的船，规划了一条完美的航线——避开所有暗礁、顺着洋流、每个转弯都算得精准漂亮。你信心满满地出航，结果第一天就一头撞上礁石，船沉了。</p>
-<p>问题出在哪？不是领航员不够强，也不是船不够好。是你手上那张地图是假的。礁石的位置标错了，洋流的方向画反了。地图一旦错了，再完美的航线，都只是一封通往灾难的邀请函。</p>
+<section class="screen" id="05-data-lifeblood" data-title="数据是命根子：干净数据与前视偏差"><div class="wrap"><p class="kicker"><span class="dot"></span>第二部 · 市场与数据的地基　·　第 5 章</p><h1 class="title">数据是命根子：干净数据与前视偏差</h1><div class="content"><p>一艘船准备横渡陌生海域。领航员经验老到，船身坚固，航线也规划得近乎完美：避开暗礁、顺着洋流，每个转弯都算得很准。船刚出航一天，却一头撞上礁石，沉了。</p>
+<p>领航员和船都没有问题，错的是地图：礁石的位置标错了，洋流的方向画反了。地图一旦不可信，精心规划的航线只会让船更快驶向事故。</p>
 <p>在量化交易里，数据（data）就是那张地图。你的策略再聪明、你的程序再优雅、你的统计再严谨，只要喂给它的数据是错的、脏的、或是混进了「你当时根本不可能知道的」信息，那么你辛苦算出来的漂亮回报，全都是海市蜃楼。</p>
 <p>这一章，我们就来认识这位沉默的头号杀手。它不会大声报错，不会跳出红字，它只会安安静静地，让你以为自己找到了金矿。</p>
 <h2>垃圾进，垃圾出</h2>
@@ -631,7 +693,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 </ol>
 </div></div></div></section>
 <section class="screen" id="06-from-intuition-to-hypothesis" data-title="从直觉到假说：把「我觉得」变成可以被证伪的一句话"><div class="wrap"><p class="kicker"><span class="dot"></span>第三部 · 把想法变成可检验的规则　·　第 6 章</p><h1 class="title">从直觉到假说：把「我觉得」变成可以被证伪的一句话</h1><div class="content"><h2>一个下午的直觉</h2>
-<p>想象你周末下午盯着手机看行情，看到某个币一天之内跌了 15%。你心里冒出一个念头：</p>
+<p>周末下午，你盯着手机上的行情。某个币一天之内跌了 15%，一个念头冒出来：</p>
 <blockquote>
 <p>「跌这么多，应该要反弹了吧？」</p>
 </blockquote>
@@ -736,7 +798,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 </ol>
 <p>下一章，我们就带着你辛苦削出来的这句假说，走进那台既是时光机、又是照妖镜的机器——回测。你会看到，同一句假说，在诚实的人手里和作弊的人手里，会跑出完全不同的结果。</p>
 </div></div></div></section>
-<section class="screen" id="07-backtesting" data-title="回测：你的时光机，也是你的照妖镜"><div class="wrap"><p class="kicker"><span class="dot"></span>第三部 · 把想法变成可检验的规则　·　第 7 章</p><h1 class="title">回测：你的时光机，也是你的照妖镜</h1><div class="content"><p>想象有人递给你一台时光机。规则很简单：你可以回到过去的任何一天，带着你今天的交易点子，看看如果当时就照这套规则买卖，现在会赚多少、赔多少。</p>
+<section class="screen" id="07-backtesting" data-title="回测：你的时光机，也是你的照妖镜"><div class="wrap"><p class="kicker"><span class="dot"></span>第三部 · 把想法变成可检验的规则　·　第 7 章</p><h1 class="title">回测：你的时光机，也是你的照妖镜</h1><div class="content"><p>回测很像一台时光机。它让你把今天的交易点子放回过去，检查如果当时就照这套规则买卖，到现在会赚多少、赔多少。</p>
 <p>听起来像作弊，对吧？过去的股价都摊在那里了，你只要挑对进出点，不就稳赚？</p>
 <p>这台时光机，量化圈叫它「回测」（backtesting）——把一套已经写清的交易规则，放进历史数据中重放，估计「若当时按这套信息与执行约束行动，结果会怎样」。它是量化研究的核心工具之一。</p>
 <p>但这一章我最想告诉你的，不是它多强大，而是：这台时光机有一个致命的毛病。它太听话了。你心里期待什么答案，只要你不小心，它就会给你什么答案。用好了，它是照见未来的时光机；用不好，它就是一面照妖镜——照出来的不是市场的真相，而是你一厢情愿的倒影。</p>
@@ -819,8 +881,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 </ol>
 </div></div></div></section>
 <section class="screen" id="08-statistical-rigor" data-title="统计严谨：为什么你的「圣杯」多半是噪声"><div class="wrap"><p class="kicker"><span class="dot"></span>第三部 · 把想法变成可检验的规则　·　第 8 章</p><h1 class="title">统计严谨：为什么你的「圣杯」多半是噪声</h1><div class="content"><h2>一个能连对十次的骗子</h2>
-<p>我们先玩个游戏。</p>
-<p>想象一个房间里坐了一万个人，每人一枚硬币。主持人说：「一起掷，猜对正面的站着，猜错的请坐下。」</p>
+<p>房间里坐着一万个人，每人拿一枚硬币。主持人说：「一起掷，猜对正面的站着，猜错的请坐下。」</p>
 <p>第一轮，大约一半的人站着；第二轮，又淘汰一半。这样走完十轮，通常仍会有好几个人连续猜对十次。</p>
 <p>如果镜头只对准其中一个，你会看到一个「连对十次」的天才。你会忍不住想：他一定有诀窍吧？是不是该付钱请他教你？</p>
 <p>但你我都知道，他什么诀窍都没有。参与者够多时，出现少数极端幸运者并不奇怪。真正骗人的不是那枚硬币，而是那个只让你看见赢家、却藏起全部参与者的镜头。</p>
@@ -918,7 +979,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 </ol>
 </div></div></div></section>
 <section class="screen" id="09-signals-and-factors" data-title="信号与因子：一个想法如何变成一条可交易的规则"><div class="wrap"><p class="kicker"><span class="dot"></span>第三部 · 把想法变成可检验的规则　·　第 9 章</p><h1 class="title">信号与因子：一个想法如何变成一条可交易的规则</h1><div class="content"><p>在第6章，我们学会把「我觉得跌多了会反弹」这种模糊的直觉，磨成一句可以被证伪的话。那是一个很大的进步——但它终究还只是一句话。一句话不会自己去下单。</p>
-<p>想象你要出远门一个月，想请一位助理帮你顾着账户。你不能只丢给他一句「看到便宜就买」，他会一脸茫然：多便宜算便宜？买多少？什么时候卖？什么时候该收手？你得把那句话，拆成他就算闭着眼睛也能一步步照做的步骤。</p>
+<p>如果你要出远门一个月，把账户交给助理，光说「看到便宜就买」毫无用处。多便宜算便宜？买多少？什么时候卖？什么时候该收手？规则必须具体到他不需要猜，也能一步步执行。</p>
 <p>这一章，讲的就是怎么把「一句假说」翻译成「一台机器每天照着做的规则」。中间那段翻译，是这门手艺最核心、也最容易出事的地方。我们会看到，魔鬼几乎全藏在细节里——尤其藏在那些你随手多转一下的旋钮里。</p>
 <h2>信号：一盏只会亮三种颜色的灯</h2>
 <p>先讲最关键的一个词：<strong>信号（signal）</strong>。</p>
@@ -1049,7 +1110,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <li>想一想：如果有人跟你炫耀一条回测收益惊人的策略，你该问他哪三个问题，才能判断他报的是毛收益还是净收益、他的成交价格假设又有多乐观？把这三个问题写下来，它们以后会帮你挡掉很多美丽的陷阱。</li>
 </ol>
 </div></div></div></section>
-<section class="screen" id="11-risk-management" data-title="风险管理：先想怎么不死，再想怎么赢"><div class="wrap"><p class="kicker"><span class="dot"></span>第四部 · 先学会不死　·　第 11 章</p><h1 class="title">风险管理：先想怎么不死，再想怎么赢</h1><div class="content"><p>假设有一位朋友，我们叫他老陈。今年一到六月，他把十万本金滚成了二十万，整整翻倍，请你吃饭时眉飞色舞地讲他的心得。</p>
+<section class="screen" id="11-risk-management" data-title="风险管理：先想怎么不死，再想怎么赢"><div class="wrap"><p class="kicker"><span class="dot"></span>第四部 · 先学会不死　·　第 11 章</p><h1 class="title">风险管理：先想怎么不死，再想怎么赢</h1><div class="content"><p>老陈今年一到六月把十万本金滚成了二十万，整整翻倍。请你吃饭时，他眉飞色舞地讲起自己的心得。</p>
 <p>然后七月来了。老陈押了一把「很有把握」的大单，方向错了；他不甘心，又加码想摊平一点，市场却没有回头。等他终于认赔出场，二十万只剩四万。</p>
 <p>现在陪老陈算一笔残忍的账：他从四万要爬回二十万，需要赚回的不是刚亏掉的 80%，而是 400%。前面六个月每一笔都做对的成果，被七月的一个晚上，连本带利地按了重来键。</p>
 <p>这一章，我们先不谈怎么赢，谈一件更根本的事：怎样降低一次错误结束整场游戏的概率。预测能力再强，若风险边界允许账户被一次尾部事件摧毁，那份能力也没有时间兑现。</p>
@@ -1128,7 +1189,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 二、禁止未预先登记的亏损加码。
 三、禁止马丁格尔式递增仓位。</p>
 <p>为什么用这么强硬、甚至有点不近人情的措辞？因为我们吃过亏，也太了解人性了。我们发现：只要一条风险管理规则里留了「特殊情况可以例外」的缝，那个缝迟早会被「上头的你」撑成一扇大门。</p>
-<p>你可以想象那个画面：某天市场剧烈波动，一笔单子亏到接近熔断线，一个声音会非常有说服力地说：「这次不一样，这是难得的机会，今天先破例，把熔断关掉。」——它每一次都会说「这次不一样」。而风险管理规则存在的全部意义，恰恰是在这个瞬间，替那个已被贪婪和恐惧绑架的你，做出清醒的决定。</p>
+<p>某天市场剧烈波动，一笔单子亏到接近熔断线。一个声音会非常有说服力地说：「这次不一样，这是难得的机会，今天先破例，把熔断关掉。」它每一次都会说「这次不一样」。而风险管理规则存在的全部意义，恰恰是在这个瞬间，替那个已被贪婪和恐惧绑架的你，做出清醒的决定。</p>
 <p>所以我们把这些规则从「建议」升级成「铁律」，写进系统和治理流程。机器负责在核准的边界内不心软；人负责批准上线、资金划拨、风险上限和放大规模这些边界动作。第13章会把这条分工讲清楚。</p>
 <p>这听起来很麻烦？确实麻烦。但我们宁可麻烦，也不要某天早上醒来，发现昨晚那个「就破例一次」的自己，把雪球砸碎了。纪律的意义从来不是在你冷静时约束你——冷静的你根本不需要约束。纪律的全部意义，是在你疯狂时拦住你。</p>
 </div>
@@ -1181,7 +1242,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 </blockquote>
 <p>现在，分散化的真义就能一句话讲清楚了：</p>
 <p><strong>分散化的威力，不来自你「买了几档」，而来自这些东西彼此之间「有多不一起动」。</strong></p>
-<p>我们拿小林的例子把这件事讲透。假设每一档资产，单独看都有一定的波动风险——我们把这个风险想象成「它自己会乱晃的幅度」。</p>
+<p>我们拿小林的例子把这件事讲透。假设每一档资产，单独看都有一定的波动风险——这里先把这个风险粗略理解为「它自己会乱晃的幅度」。</p>
 <ul>
 <li><strong>情况 A（小林的情况）：</strong>十档币，彼此相关性接近 +1。它们几乎同步。这时候你把十档加在一起，整体的晃动幅度<strong>几乎不会变小</strong>。因为它们同时往同一个方向晃，力气是叠加的，不是抵消的。你以为分散了，其实整个组合的风险跟你只买一档，差不了多少。</li>
 <li><strong>情况 B（更有效的分散）：</strong>十档东西的相关性较低，权重也没有让某一档独占风险。这时，一部分涨跌会互相抵消，组合波动通常会低于把资金集中在某个代表性的高风险成员上。</li>
@@ -1240,7 +1301,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 </blockquote>
 <p>怎么做？很直觉：<strong>对那些晃得凶的成员，少放一点钱；对那些晃得温吞的成员，多放一点钱。</strong>这样调完之后，每个成员对整个组合「制造的震荡」才有机会更接近，也能减少某一个成员独自绑架整条资金曲线的风险。</p>
 <p>回到刚刚的例子：狂野的 B 一天晃 10%，温吞的 A 一天晃 1%。若暂时忽略两者相关性，按反波动率的直觉，B 的资金大约只放 A 的十分之一，两者贡献的波动才会接近。<strong>这只是入门版直觉，还不是真正完整的风险平价。</strong>正式计算要把相关性放进协方差矩阵，估计每个成员对组合波动的边际贡献。把更多资金分给低波动资产还可能需要杠杆才能达到目标收益或波动，于是融资、保证金和尾部风险也会进入账本。</p>
-<p>我用一个生活比方收尾这个概念。想象你在一艘小船上，要安排几位乘客坐哪。<strong>你不会让大家随便乱坐，你会让船左右平衡。</strong>一个大块头（高波动资产）你会请他往中间坐、别靠边；几个瘦小的（低波动资产）可以坐外侧一点。你在乎的不是「每个人占的座位面积一样」（那是等权），而是「船不会因为谁一个人而翻」（那是风险平价）。</p>
+<p>一艘小船要安排几位乘客的座位。<strong>你不会让大家随便乱坐，而会让船左右平衡。</strong>一个大块头（高波动资产）你会请他往中间坐、别靠边；几个瘦小的（低波动资产）可以坐外侧一点。你在乎的不是「每个人占的座位面积一样」（那是等权），而是「船不会因为谁一个人而翻」（那是风险平价）。</p>
 <p>一句话总结两者的差别：</p>
 <ul>
 <li><strong>等权：</strong>每个人分一样大的座位。简单、诚实、不容易自作聪明。</li>
@@ -1280,12 +1341,11 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <div class="callout exercise">
 <p><strong>✍️ 动手试试 / 想一想</strong></p>
 <ol>
-<li><strong>翻出你自己（或想象中）的一篮子标的</strong>，列出五到十档。用同一频率的收益数据，分别计算普通时期与至少一个压力窗口的相关性，再检查最大共同跌幅和共同流动性来源。不要只凭记忆问「上次是不是一起跌」；把正常样本与压力样本并排，才看得见分散保护是否缩水。</li>
+<li><strong>列出你自己持有或准备研究的一篮子标的</strong>，共选五到十档。用同一频率的收益数据，分别计算普通时期与至少一个压力窗口的相关性，再检查最大共同跌幅和共同流动性来源。不要只凭记忆问「上次是不是一起跌」；把正常样本与压力样本并排，才看得见分散保护是否缩水。</li>
 <li><strong>做一个小小的思想实验：</strong>假设两个成员的日波动分别约为 2% 和 8%。先忽略相关性，用反波动率的直觉估一估该怎么分，才能让两者贡献的波动接近。然后再问一步：如果它们总在同一天同方向大涨大跌，为什么这个粗算仍不够？</li>
 </ol>
 </div></div></div></section>
-<section class="screen" id="13-research-to-live" data-title="从研究到实盘：治理、纪律与那道不可逆的门"><div class="wrap"><p class="kicker"><span class="dot"></span>第四部 · 先学会不死　·　第 13 章</p><h1 class="title">从研究到实盘：治理、纪律与那道不可逆的门</h1><div class="content"><p>想象一个画面。</p>
-<p>屏幕上，一条回测的权益曲线从左下角一路爬到右上角，漂亮得像教科书的插图。你花了几个星期，清理干净数据、写好信号、算过成本、做过样本外检验，连夏普比率都对得起良心。现在，鼠标光标停在一个按钮上。</p>
+<section class="screen" id="13-research-to-live" data-title="从研究到实盘：治理、纪律与那道不可逆的门"><div class="wrap"><p class="kicker"><span class="dot"></span>第四部 · 先学会不死　·　第 13 章</p><h1 class="title">从研究到实盘：治理、纪律与那道不可逆的门</h1><div class="content"><p>屏幕上，一条回测的权益曲线从左下角一路爬到右上角，漂亮得像教科书的插图。你花了几个星期，清理干净数据、写好信号、算过成本、做过样本外检验，连夏普比率都对得起良心。现在，鼠标光标停在一个按钮上。</p>
 <p>这个按钮，和你按过几百次的「执行回测」按钮，长得几乎一模一样。可是这一次，它上面写的是「开始实盘」。</p>
 <p>你按过的每一次回测，都可以重来。跑坏了？改个参数，再跑一次；历史还是那段历史，昨天的价格不会因为你赔了钱就变。但「开始实盘」这个按钮不一样。按下去的那一刻，你的程序会对着真正的交易所，用你真正的钱，送出一张真正的单。它成交在哪个价格，就是哪个价格。你不能按 Ctrl+Z。</p>
 <p>这就是本章要讲的那道门：<strong>纸上谈兵和真金白银之间，隔着一道不可逆的门。</strong>这一部叫「活下去」，前面两章我们谈了怎么做风险管理、怎么分散鸡蛋，这一章要谈的是——当你终于要把研究成果推过这道门、推向真钱，该用什么样的纪律，才不会在门的另一头把自己弄死。</p>
@@ -1369,7 +1429,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <p>先讲第一个，也是最根深蒂固的一个：<strong>确认偏误（confirmation bias）</strong>。</p>
 <p>一句大白话：确认偏误，就是我们会不自觉地去找「支持自己想法」的证据，而自动忽略「反对自己想法」的证据。</p>
 <p>打个生活的比方。你先认定某个品牌特别可靠，之后会主动收藏称赞它的评价；碰到差评，却很快解释成「那个人不会用」或「只是个例」。证据并没有被同一把尺处理——支持你的被留下，反对你的被重新命名。</p>
-<p>在量化交易里，这个偏心会变得非常危险。想象你熬了三个周末，好不容易做出一个策略，回测曲线漂漂亮亮往右上爬。这时候你的大脑已经偷偷把它当成「自己的孩子」了。接下来会发生什么？</p>
+<p>在量化交易里，这个偏心会变得非常危险。你熬了三个周末，好不容易做出一个策略，回测曲线漂漂亮亮往右上爬。这时候你的大脑已经偷偷把它当成「自己的孩子」了。接下来会发生什么？</p>
 <ul>
 <li>它表现好的那几个月，你会截图、会反复看，心里想「你看，我就说吧」。</li>
 <li>它表现烂的那几个月，你会找理由：「那段时间市场太反常」「那是黑天鹅，不算」。</li>
@@ -1405,7 +1465,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <p>一句大白话：赌徒谬误，就是在没有机制证据时，认定一串结果「该被补回来」——连续开了五次红，就觉得下一把理应开黑。</p>
 <p>在每轮独立、概率不变的轮盘里，前五次不会改变第六次。市场当然未必独立同分布，趋势和状态转换都可能存在；但<strong>一串连亏本身，不能证明下一笔胜率提高</strong>。要加大仓位，你得拿出新的机制和数据，不能拿「总该轮到我了」当理由。</p>
 <p>第二个更微妙，是<strong>自利性归因偏差（self-serving attribution bias）</strong>——我们对好结果和坏结果使用两套解释：赚了，是我厉害；亏了，是运气不好、市场反常。</p>
-<p>这套双重标准，会让你系统性地高估自己。想象一个新手，靠着运气重仓押中了一波暴涨，账户翻倍。他很容易把这归功于自己的「眼光」和「胆识」，而不愿认真估计这次结果里有多少运气。于是他学到了一个完全错误的教训：重仓、赌方向、凭感觉，是会赚钱的。然后他会用越来越大的注，去重复这个「成功经验」，直到市场把运气连本带利收回去。</p>
+<p>这套双重标准，会让你系统性地高估自己。一个新手靠着运气重仓押中了一波暴涨，账户翻倍。他很容易把这归功于自己的「眼光」和「胆识」，而不愿认真估计这次结果里有多少运气。于是他学到了一个完全错误的教训：重仓、赌方向、凭感觉，是会赚钱的。然后他会用越来越大的注，去重复这个「成功经验」，直到市场把运气连本带利收回去。</p>
 <p>对付这件事，不能只在亏损时查错、盈利时就开香槟。输赢都要过同一套归因审计：事前写下预期，事后拆开市场暴露、成本、执行偏差、异常事件和抽样不确定性；还要问一个反事实——若换一个相近时期或相同风险的基准，这份「本事」还剩多少？</p>
 <p>一次盈利当然可能包含真本事，也可能同时含有顺风、杠杆和运气。统一的审计标准不是为了把所有成功都说成偶然，而是防止你只在结果难看时才想起不确定性。</p>
 <h2>纪律：别要求上头的自己临场变聪明</h2>
@@ -1438,7 +1498,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 </div></div></div></section>
 <section class="screen" id="15-negative-results-are-knowledge" data-title="负结果是知识：像科学家一样持续精进"><div class="wrap"><p class="kicker"><span class="dot"></span>第五部 · 心态与长路　·　第 15 章</p><h1 class="title">负结果是知识：像科学家一样持续精进</h1><div class="content"><h2>被划掉的那片海，是怎么赚来的</h2>
 <p>前面几章已经多次说过：一个想法没有通过，不等于研究没有产出。到这一章，我们把这句话完整展开。</p>
-<p>想象一位航海家，手上有一张还没画完的海图。他往西南航行了三个星期，满心期待传说中的岛屿，结果只看见一片空海。他当然可以把海图揉掉，骂自己白费了时间；也可以在正确的位置写下：「在本次航线、季节与观测范围内，没有发现岛。」</p>
+<p>一位航海家拿着一张还没画完的海图，往西南航行了三个星期。他满心期待传说中的岛屿，最后只看见一片空海。他可以把海图揉掉，骂自己白费了时间；也可以在正确的位置写下：「在本次航线、季节与观测范围内，没有发现岛。」</p>
 <p>第二种写法看起来不够痛快，却更像可靠的研究。它没有把「这次没看见」夸大成「永远不存在」，也没有假装三个星期毫无价值。它精确记录了自己究竟排除了什么，又留下了哪些边界。</p>
 <p>量化研究也是这样。你花两个星期清数据、写规则、跑检验，最后发现这个想法不成立。真正决定这两个星期是否白费的，不是结果正负，而是你能不能留下一个别人看得懂、未来的你也不会误解的裁决。</p>
 <h2>一个你敢信的「不行」，胜过一个你不敢信的「行」</h2>
@@ -1448,7 +1508,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <p>这不是精神胜利法，它有实实在在的现金价值：你这辈子能拿去做研究的时间是有限的，而把时间继续砸在「已知没用」的方向上，才是真正的、会痛的亏损。负结果帮你省下的，正是这种亏损。</p>
 <h2>贴个「失败」标签，不算完成任务</h2>
 <p>不过这里有个陷阱，新手特别容易掉进去：把「否决一个想法」当成「完成了一件工作」。</p>
-<p>想象你手上有个假说（hypothesis）：「比特币在半夜大跌之后，接下来一小时通常会反弹。」你跑了回测，发现不赚钱。于是你在笔记本上写下三个字：「没用。」翻页，下一个。</p>
+<p>比如你手上有个假说（hypothesis）：「比特币在半夜大跌之后，接下来一小时通常会反弹。」你跑了回测，发现不赚钱。于是你在笔记本上写下三个字：「没用。」翻页，下一个。</p>
 <p>这样做，你其实几乎什么都没学到。</p>
 <p>我们有另一句话，专门对付这种偷懒：<strong>否决不是完成任务的捷径；精确定位知识的边界，才算完成任务。</strong>杀掉一个想法的时候，你至少要能回答三个问题：</p>
 <ul>
@@ -1505,7 +1565,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <p><strong>✍️ 动手试试 / 想一想</strong></p>
 <ol>
 <li><strong>替一个「失败」补写结案报告。</strong>找一个你曾经放弃的想法（哪怕只是「我觉得某条均线很准，但试了没用」），试着替它补写三行：我当初到底证伪了哪句话？还有哪一句其实根本没测？如果重来，最便宜的下一步是什么？你会发现，光是逼自己回答这三道题，那个「失败」就悄悄变回了原料。</li>
-<li><strong>当一次「四种假证伪」侦探。</strong>想象你朋友兴冲冲跑来说：「我测过了，XX 策略根本没用。」你要当那个扫兴但可靠的朋友，针对四种假证伪各问他一个问题。把这四个问题写下来——然后记住：这张清单，以后请务必先拿来问你自己，再拿去问别人。</li>
+<li><strong>当一次「四种假证伪」侦探。</strong>朋友兴冲冲跑来跟你说：「我测过了，XX 策略根本没用。」你要当那个扫兴但可靠的朋友，针对四种假证伪各问他一个问题。把这四个问题写下来——然后记住：这张清单，以后请务必先拿来问你自己，再拿去问别人。</li>
 </ol>
 </div></div></div></section>
 <section class="screen" id="16-find-your-corner" data-title="找到你的角落：规模匹配、容量与真正的护城河"><div class="wrap"><p class="kicker"><span class="dot"></span>第五部 · 心态与长路　·　第 16 章</p><h1 class="title">找到你的角落：规模匹配、容量与真正的护城河</h1><div class="content"><p>读到这里，你可能有点泄气。</p>
@@ -1513,7 +1573,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <p>我想先诚实地说：如果你打算跟他们在同一片海域、用同一种方式、抢同一群鱼——那你确实没什么机会。</p>
 <p>但你不必那样做。这最后一章要讨论的，不是一个「机构绝不会来」的神秘角落，而是怎样选择<strong>与你的规模、时间、数据和执行条件相匹配的问题</strong>。</p>
 <h2>别去大船的猎场撒网</h2>
-<p>想象一片海。最肥美的深海渔场上，停着一整排工业拖网渔船。它们有声呐、有几公里长的渔网、有能在海上待三个月的冷冻舱。那是聪明钱的猎场。你划着一艘小舢板进去，跟它们抢同一群金枪鱼，结果只有一个：被碾过去，连水花都看不见。</p>
+<p>最肥美的深海渔场上，停着一整排工业拖网渔船。它们有声呐、有几公里长的渔网，还有能在海上待三个月的冷冻舱。那是聪明钱的猎场。你划着一艘小舢板进去，跟它们抢同一群金枪鱼，结果只有一个：被碾过去，连水花都看不见。</p>
 <p>可是，这片海不是只有深海渔场。</p>
 <p>海岸边有无数个小小的潮池、礁石缝、退潮后才露出来的洼地。那里也有鱼、有虾、有蟹——只是量很小。小到什么程度？小到那些拖网船根本不屑一顾：开过去的柴油钱都不够、大网子伸不进石缝、就算把这一洼全捞光，也填不满冷冻舱的一个角落，不值得船长多看一眼。</p>
 <p>这些角落并不专属于你，也不保证有鱼。它们只是可能因为容量、固定运营成本或组织流程而不适合大型资金。对小体量研究者而言，这是一条值得检查的线索。</p>
@@ -1561,7 +1621,7 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 <div class="callout warn">
 <p><strong>⚠️ 常见误区</strong></p>
 <p><strong>误区一：以为要赢，就得在速度和规模上正面击败大机构。</strong>
-不必把战场选在自己结构性吃亏的地方。更务实的做法是找与自身规模、周期、数据和执行能力匹配的问题。但不要据此想象机构完全缺席；任何正结果仍要接受竞争、容量和成本检验。</p>
+不必把战场选在自己结构性吃亏的地方。更务实的做法是找与自身规模、周期、数据和执行能力匹配的问题。但不要据此认定机构完全缺席；任何正结果仍要接受竞争、容量和成本检验。</p>
 <p><strong>误区二：一看到「冷门」就以为是机会。</strong>
 冷门既不是必要条件，也不是充分条件。热门市场里可能存在风险溢价或不同周期的机会；冷门角落也可能只是没有流动性、没有机制。冷门最多是一条线索，真正决定是否值得继续的，仍是机制、证据、净收益和容量。</p>
 </div>
@@ -1891,6 +1951,8 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
  var screens=[].slice.call(document.querySelectorAll('.screen')),ids=screens.map(function(s){return s.id;});
  var tocLinks=[].slice.call(document.querySelectorAll('.toc-a'));
  var prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn');
+ main.tabIndex=-1;
+ document.querySelectorAll('.content strong').forEach(function(node){var first=node.firstChild;if(first&&first.nodeType===3)first.nodeValue=first.nodeValue.replace(/^(?:⚠️|🔬|📌|✍️)\s*/u,'');});
  var cur=0,readingKey='mq-reading-position-v1',readingTimer=0;
  function loadReading(){try{var raw=localStorage.getItem(readingKey),v=raw?JSON.parse(raw):null,p=v&&v.p;return v&&ids.indexOf(v.id)>0&&typeof p==='number'&&isFinite(p)?{id:v.id,p:Math.max(0,Math.min(1,p))}:null;}catch(e){return null;}}
  function rememberReading(){if(ids[cur]==='cover')return;var d=main.scrollHeight-main.clientHeight,p=d>0?main.scrollTop/d:0;try{localStorage.setItem(readingKey,JSON.stringify({id:ids[cur],p:Math.max(0,Math.min(1,p))}));}catch(e){}}
@@ -1913,35 +1975,44 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
   var act=document.querySelector('.toc-a.active');if(act)act.scrollIntoView({block:'nearest'});
  }
  function go(i,viaHash,restore){
+  var closingMobile=isNarrow()&&reader.classList.contains('nav-open');
   cur=clamp(i);render();
   if(typeof restore==='number')restoreReading(restore);else rememberReading();
   if(!viaHash){var w='#'+ids[cur];if(location.hash!==w)location.hash=w;}
+  if(closingMobile)focusMain();
   reader.classList.remove('nav-open');hideRailCard();syncMenu();
  }
  window.addEventListener('hashchange',function(){var h=location.hash.replace('#','');go(h?idx(h):0,true);});
  tocLinks.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();go(idx(a.getAttribute('data-target')));});});
  prevBtn.addEventListener('click',function(){go(cur-1);});
  nextBtn.addEventListener('click',function(){go(cur+1);});
- document.getElementById('brandHome').addEventListener('click',function(){go(0);});
- document.getElementById('coverCta').addEventListener('click',function(){go(idx('00-preface'));});
+ var brandHome=document.getElementById('brandHome');
+ brandHome.addEventListener('click',function(){go(0);});
+ brandHome.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go(0);}});
+ var coverCta=document.getElementById('coverCta'),bookTransition=document.createElement('div'),openingBook=false;
+ bookTransition.className='cover-transition';bookTransition.setAttribute('aria-hidden','true');bookTransition.innerHTML='<div class="cover-transition-book"><img src="assets/cover-ai-v2.png" alt=""/></div>';document.body.appendChild(bookTransition);
+ function focusMain(){try{main.focus({preventScroll:true});}catch(e){main.focus();}}
+ function openFirstPage(){if(openingBook)return;if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches){go(idx('00-preface'));focusMain();return;}openingBook=true;coverCta.disabled=true;bookTransition.classList.add('is-opening');setTimeout(function(){go(idx('00-preface'));focusMain();},520);setTimeout(function(){bookTransition.classList.remove('is-opening');coverCta.disabled=false;openingBook=false;},780);}
+ coverCta.addEventListener('click',openFirstPage);
  document.addEventListener('keydown',function(e){
   if(e.metaKey||e.ctrlKey||e.altKey)return;var t=(e.target.tagName||'');if(t==='INPUT'||t==='TEXTAREA')return;
-  if(e.key==='ArrowRight')go(cur+1);else if(e.key==='ArrowLeft')go(cur-1);else if(e.key==='Escape'){reader.classList.remove('nav-open');hideRailCard();syncMenu();}
+  if(e.key==='ArrowRight')go(cur+1);else if(e.key==='ArrowLeft')go(cur-1);else if(e.key==='Escape'){if(reader.classList.contains('nav-open')){e.preventDefault();setMobileMenu(false,true);}else{hideRailCard();syncMenu();}}
  });
  function updateReadingProgress(){var d=main.scrollHeight-main.clientHeight;prog.style.setProperty('--progress',String(d>0?main.scrollTop/d:0));}
  main.addEventListener('scroll',function(){updateReadingProgress();queueRememberReading();},{passive:true});
  window.addEventListener('pagehide',rememberReading);
  var menuBtn=document.getElementById('menuBtn'),scrim=document.getElementById('scrim'),sidebar=document.getElementById('sidebar'),railCard=document.getElementById('railCard'),railMeta=document.getElementById('railMeta'),railTitle=document.getElementById('railTitle');
  function isNarrow(){return window.matchMedia('(max-width:820px)').matches;}
- function syncMenu(){var open=isNarrow()?reader.classList.contains('nav-open'):!reader.classList.contains('nav-collapsed');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.setAttribute('title',open?'收起目录':'展开目录');if(isNarrow()||open)hideRailCard();}
+ function syncMenu(){var narrow=isNarrow();if(!narrow)reader.classList.remove('nav-open');var open=narrow?reader.classList.contains('nav-open'):!reader.classList.contains('nav-collapsed');menuBtn.setAttribute('aria-expanded',String(open));menuBtn.setAttribute('title',open?'收起目录':'展开目录');if(sidebar){sidebar.inert=narrow&&!open;if(narrow)sidebar.setAttribute('aria-hidden',String(!open));else sidebar.removeAttribute('aria-hidden');}if(narrow||open)hideRailCard();}
+ function setMobileMenu(open,returnFocus){var wasOpen=reader.classList.contains('nav-open');if(!open&&wasOpen){if(returnFocus)menuBtn.focus();else focusMain();}reader.classList.toggle('nav-open',open);syncMenu();if(open)requestAnimationFrame(function(){var target=sidebar.querySelector('.toc-a.active')||tocLinks[0];if(target)target.focus();});}
  function setRailShape(at){tocLinks.forEach(function(a,i){var d=Math.abs(i-at),w=d===0?38:d===1?27:d===2?18:10;a.style.setProperty('--tick-w',w+'px');a.style.setProperty('--tick-alpha',d>2?'.38':String(1-d*.23));});}
  function clearRailShape(){tocLinks.forEach(function(a){a.style.removeProperty('--tick-w');a.style.removeProperty('--tick-alpha');});}
  function hideRailCard(){if(!railCard)return;railCard.classList.remove('visible');railCard.setAttribute('aria-hidden','true');clearRailShape();}
  function showRailCard(a,i){if(isNarrow()||!reader.classList.contains('nav-collapsed')||!railCard)return;var label=a.parentElement.querySelector('.toc-label'),no=a.querySelector('.toc-no'),title=a.querySelector('.toc-t');railMeta.textContent=(label?label.textContent:'目录')+' · '+(no?no.textContent:'');railTitle.textContent=title?title.textContent:'';railCard.classList.add('visible');railCard.setAttribute('aria-hidden','false');setRailShape(i);var r=a.getBoundingClientRect(),h=railCard.offsetHeight;railCard.style.top=Math.max(68,Math.min(innerHeight-h-18,r.top+r.height/2-h/2))+'px';}
  tocLinks.forEach(function(a,i){a.addEventListener('mouseenter',function(){showRailCard(a,i);});a.addEventListener('focus',function(){showRailCard(a,i);});a.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go(idx(a.getAttribute('data-target')));}});a.addEventListener('mouseleave',hideRailCard);a.addEventListener('blur',hideRailCard);});
  if(sidebar)sidebar.addEventListener('mouseleave',hideRailCard);
- menuBtn.addEventListener('click',function(){if(isNarrow())reader.classList.toggle('nav-open');else reader.classList.toggle('nav-collapsed');syncMenu();});
- if(scrim)scrim.addEventListener('click',function(){reader.classList.remove('nav-open');syncMenu();});
+ menuBtn.addEventListener('click',function(){if(isNarrow())setMobileMenu(!reader.classList.contains('nav-open'),true);else{reader.classList.toggle('nav-collapsed');syncMenu();}});
+ if(scrim)scrim.addEventListener('click',function(){setMobileMenu(false,true);});
  window.addEventListener('resize',syncMenu);syncMenu();
  function cvar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
  function curTheme(){return document.documentElement.getAttribute('data-theme')||((window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light');}

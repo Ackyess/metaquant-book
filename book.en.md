@@ -580,9 +580,9 @@ The curve collapsed. This is an order-book lesson, not merely a cost lesson: **i
 
 # Chapter 5: Data Is Your Lifeline: Clean Data and Look-Ahead Bias
 
-Imagine you are about to cross an unfamiliar sea. You hire the finest navigator, prepare the sturdiest ship, and plot a perfect route—avoiding every reef, following the currents, calculating each turn with precision. You set sail full of confidence, only to strike a reef and sink on the first day.
+A ship is preparing to cross unfamiliar waters. Its navigator is experienced, its hull is sound, and its route has been planned almost perfectly: avoid the reefs, follow the currents, calculate every turn. Yet one day after setting sail, it strikes a reef and sinks.
 
-What went wrong? The navigator was not lacking, nor was the ship inadequate. The map in your hands was false. The reefs were marked in the wrong places, and the currents pointed the wrong way. Once the map is wrong, even the most perfect route is simply an invitation to disaster.
+Neither the navigator nor the ship is at fault. The map is: the reefs are marked in the wrong places, and the currents point the wrong way. Once the map cannot be trusted, a carefully planned route only carries the ship faster toward disaster.
 
 In quantitative trading, data is that map. No matter how clever your strategy, elegant your code, or rigorous your statistics, if the data you feed it are wrong, dirty, or contaminated with information you could not possibly have known at the time, then the beautiful returns you worked so hard to calculate are nothing but a mirage.
 
@@ -657,7 +657,7 @@ At the same moment, some data are recorded in the time of your city, some in Gre
 
 What makes these errors so frightening is this: **they usually do not throw an error.** The program does not crash, flash red text, or complain. The data are read in, the numbers are calculated, and everything looks calm. In the lab, this has a name: **silent failure**—the most dangerous failures are often the ones that say nothing. An error that throws an exception at least stops you; one that does not will smile and let you proceed, all the way until you invest your money.
 
-Another, deeper trap comes from data APIs themselves. Historical APIs from exchanges or data providers commonly impose limits on pagination, records per request, request frequency, and how far back data can be retrieved. Without page-by-page validation, your download may stop midway while still returning a normal-looking file. You think you have captured two complete years of data, when in fact you have only an incomplete three months—and it never tells you what is missing. You then plan a route with confidence using a base map you believe is complete but that actually has a huge hole in it. The consequences are easy to imagine.
+Another, deeper trap comes from data APIs themselves. Historical APIs from exchanges or data providers commonly impose limits on pagination, records per request, request frequency, and how far back data can be retrieved. Without page-by-page validation, your download may stop midway while still returning a normal-looking file. You think you have captured two complete years of data, when in fact you have only an incomplete three months—and it never tells you what is missing. You then plan a route with confidence using a base map you believe is complete but that actually has a huge hole in it. The resulting backtest is built on missing data.
 
 So when you receive any dataset, do not rush to use it. Ask it a few questions first: Which time zone does its time use? How long does it really cover, and are there gaps? Where did the “missing samples” go? These seemingly simple questions matter far more than whatever flashy algorithm your strategy uses.
 
@@ -702,7 +702,7 @@ We paid for this lesson with several days of confusion, though it really amounts
 
 ## An Afternoon Intuition
 
-Imagine watching market prices on your phone one weekend afternoon and seeing a coin fall 15% in a single day. A thought pops into your mind:
+One weekend afternoon, you are watching prices on your phone. A coin falls 15% in a single day, and a thought pops into your mind:
 
 > “After falling that much, it should bounce, right?”
 
@@ -850,7 +850,7 @@ Next chapter, we will take the hypothesis you worked so hard to carve and enter 
 
 # Chapter 7: Backtesting: Your Time Machine and Your Mirror
 
-Imagine someone hands you a time machine. The rules are simple: you can return to any day in the past, bring along your trading idea from today, and see how much you would have made or lost if you had followed those rules then.
+Backtesting is much like a time machine. It lets you take today’s trading idea into the past and check how much you would have made or lost by following those rules from then on.
 
 Sounds like cheating, right? All the past prices are laid out in front of you. As long as you choose the right entry and exit points, aren't profits guaranteed?
 
@@ -976,9 +976,7 @@ A system that never tells you “no” is not reliable; it is frightening. It me
 
 ## A Fraud Who Can Call Ten Tosses in a Row
 
-Let us play a game first.
-
-Imagine ten thousand people sitting in a room, each with a coin. The host says, “Toss together. If you correctly call heads, remain standing; if you are wrong, sit down.”
+Ten thousand people are sitting in a room, each holding a coin. The host says, “Toss together. If you correctly call heads, remain standing; if you are wrong, sit down.”
 
 After the first round, about half remain standing; after the second, half of those are eliminated again. After ten rounds, there will usually still be several people who correctly called ten tosses in a row.
 
@@ -1154,7 +1152,7 @@ This book does not cover the formula or software implementation of DSR. For begi
 
 In Chapter 6, we learned how to refine a vague intuition such as “I think something that has fallen a lot will rebound” into a statement that can be falsified. That is major progress—but it is still only a sentence. A sentence cannot place orders by itself.
 
-Imagine you are leaving on a month-long trip and want an assistant to watch over your account. You cannot simply tell them, “Buy when it looks cheap.” They would stare at you blankly: How cheap is cheap? How much should I buy? When should I sell? When should I stop? You need to break that sentence into steps they could follow one by one, even with their eyes closed.
+If you leave for a month and put an assistant in charge of your account, saying only “Buy when it looks cheap” is useless. How cheap is cheap? How much should they buy? When should they sell? When should they stop? The rules must be specific enough for the assistant to follow step by step without guessing.
 
 This chapter is about translating “a hypothesis in one sentence” into “a rule a machine follows every day.” That translation is the core of this craft—and the part most likely to go wrong. We will see that the devil is almost entirely in the details, especially in the knobs you casually decide to turn one more time.
 
@@ -1361,7 +1359,7 @@ That internal score, still positive after being reduced, was more worthy of inve
 
 # Chapter 11: Risk Management—Survive First, Then Think About Winning
 
-Imagine a friend—we'll call him Chen. From January through June this year, he turned $100,000 of capital into $200,000, a full doubling. Over dinner, he animatedly tells you how he did it.
+From January through June this year, Chen turned $100,000 of capital into $200,000, a full doubling. Over dinner, he animatedly tells you how he did it.
 
 Then July arrives. Chen places a large trade he feels “very sure” about, but gets the direction wrong. Unwilling to accept it, he adds to the position to average down, but the market does not turn around. By the time he finally admits defeat and exits, the $200,000 is down to $40,000.
 
@@ -1484,7 +1482,7 @@ More importantly, doubling down **does not turn a negative-expectancy game into 
 > Why use language that is so firm, even a little unsympathetic? Because we have paid the price, and we know human nature too well. We found that if a risk-management rule leaves even a crack for “special exceptions,” the overexcited version of you will eventually force that crack into a wide-open door.
 >
 >
-> Picture it: one day the market is moving violently, a trade is losing and nearing the circuit-breaker line, and a voice makes an extremely persuasive case: “This time is different. This is a rare opportunity. Make one exception today and turn off the circuit breaker.” It will say “this time is different” every single time. The entire purpose of risk-management rules is precisely to make a clearheaded decision for the version of you that, in that moment, has been hijacked by greed and fear.
+> One day the market is moving violently, a trade is losing and nearing the circuit-breaker line, and a voice makes an extremely persuasive case: “This time is different. This is a rare opportunity. Make one exception today and turn off the circuit breaker.” It will say “this time is different” every single time. The entire purpose of risk-management rules is precisely to make a clearheaded decision for the version of you that, in that moment, has been hijacked by greed and fear.
 >
 >
 > So we upgraded these rules from “suggestions” to non-negotiable rules and put them into the system and governance process. Machines are responsible for staying unsentimental within approved boundaries; people are responsible for approving the boundaries themselves: production launch, capital transfers, risk limits, and scaling up. Chapter 13 will explain that division of responsibility clearly.
@@ -1659,7 +1657,7 @@ How? Intuitively: **put less money into members that swing wildly, and more into
 
 Return to the example: wild B moves 10% a day, while calm A moves 1%. If we temporarily ignore their correlation, the inverse-volatility intuition says B should receive roughly one-tenth as much capital as A for their volatility contributions to be similar. **This is only a beginner’s intuition, not complete risk parity.** A formal calculation puts correlation into the covariance matrix and estimates each member’s marginal contribution to portfolio volatility. Allocating more capital to low-volatility assets may also require leverage to reach a target return or volatility, bringing financing, margin, and tail risk into the equation.
 
-Here is an everyday analogy to close out the concept. Imagine arranging passengers in a small boat. **You would not seat everyone at random; you would balance the boat from side to side.** You would ask a large passenger (a high-volatility asset) to sit closer to the middle, not at the edge; several small passengers (low-volatility assets) can sit a little farther out. What matters is not that “everyone takes up the same amount of seat space” (equal weighting), but that “the boat does not capsize because of any one person” (risk parity).
+A small boat has several passengers to seat. **You would not seat everyone at random; you would balance the boat from side to side.** You would ask a large passenger (a high-volatility asset) to sit closer to the middle, not at the edge; several small passengers (low-volatility assets) can sit a little farther out. What matters is not that “everyone takes up the same amount of seat space” (equal weighting), but that “the boat does not capsize because of any one person” (risk parity).
 
 In one sentence, the difference is:
 
@@ -1709,14 +1707,12 @@ And “staying alive long enough” is the starting point of the previous chapte
 
 ## ✍️ Try It / Think About It
 
-1. **Pull out a basket of your own (or hypothetical) holdings** and list five to ten instruments. Using returns at the same frequency, calculate correlations for normal periods and for at least one stress window, then examine the largest common decline and shared sources of liquidity. Do not rely on memory to ask, “Did they fall together last time?” Put normal and stress samples side by side to see whether diversification protection has weakened.
+1. **List a basket you own or plan to study**, choosing five to ten instruments. Using returns at the same frequency, calculate correlations for normal periods and for at least one stress window, then examine the largest common decline and shared sources of liquidity. Do not rely on memory to ask, “Did they fall together last time?” Put normal and stress samples side by side to see whether diversification protection has weakened.
 2. **Run a small thought experiment:** suppose two members have daily volatilities of about 2% and 8%. First ignore correlation and use the inverse-volatility intuition to estimate how to allocate them so their volatility contributions are similar. Then ask one more question: if they always surge and plunge in the same direction on the same days, why is this rough calculation still insufficient?
 
 ---
 
 # Chapter 13: From Research to Live Trading: Governance, Discipline, and the Irreversible Gate
-
-Picture this.
 
 On your screen, a backtested equity curve climbs from the lower left to the upper right, as beautiful as a textbook illustration. You spent weeks cleaning the data, writing the signals, calculating costs, and running out-of-sample tests. Even the Sharpe ratio passes the conscience test. Now your cursor is hovering over a button.
 
@@ -1868,7 +1864,7 @@ Put simply, confirmation bias is our unconscious tendency to seek evidence that 
 
 Here is an everyday example. You decide that a certain brand is especially reliable. Afterward, you actively save positive reviews about it; when you encounter a negative review, you quickly explain it away as “that person does not know how to use it” or “it is just one unusual case.” The evidence is not being measured by the same ruler—supporting evidence is kept, while opposing evidence is relabeled.
 
-In quantitative trading, this favoritism becomes very dangerous. Imagine staying up for three weekends and finally building a strategy whose backtest curve rises beautifully toward the upper right. By then, your brain has quietly begun treating it as “your child.” What happens next?
+In quantitative trading, this favoritism becomes very dangerous. You stay up for three weekends and finally build a strategy whose backtest curve rises beautifully toward the upper right. By then, your brain has quietly begun treating it as “your child.” What happens next?
 
 - You will screenshot and revisit the months when it performs well, thinking, “See? I told you so.”
 - You will find excuses for the months when it performs badly: “The market was too abnormal then,” or “That was a black swan; it does not count.”
@@ -1924,7 +1920,7 @@ In a roulette wheel where each round is independent and probabilities do not cha
 
 The second is subtler: **self-serving attribution bias**—using two different explanations for good and bad outcomes. When we profit, it is because we are skilled; when we lose, it is because of bad luck or an abnormal market.
 
-This double standard makes you systematically overestimate yourself. Imagine a beginner who, through luck, makes a heavily concentrated bet just before a sharp surge and doubles their account. They can easily attribute this to their own “insight” and “courage,” rather than seriously estimate how much luck contributed to the outcome. They then learn a completely wrong lesson: concentrated bets, directional gambling, and gut feeling make money. They repeat this “successful experience” with ever-larger stakes, until the market collects its luck back with interest.
+This double standard makes you systematically overestimate yourself. A beginner who, through luck, makes a heavily concentrated bet just before a sharp surge and doubles their account can easily attribute it to their own “insight” and “courage,” rather than seriously estimate how much luck contributed to the outcome. They then learn a completely wrong lesson: concentrated bets, directional gambling, and gut feeling make money. They repeat this “successful experience” with ever-larger stakes, until the market collects its luck back with interest.
 
 To handle this, do not investigate only after losses and pop champagne after profits. Both wins and losses must go through the same attribution audit: write expectations in advance, then break down market exposure, costs, execution deviations, exceptional events, and sampling uncertainty afterward. Also ask a counterfactual: if you used a similar period or a benchmark with the same risk, how much of this “skill” would remain?
 
@@ -1965,7 +1961,7 @@ Chapter 11 provides the risk rules, and Chapter 13 provides their system and gov
 
 The previous chapters have made this point repeatedly: an idea that fails the test does not mean the research produced nothing. In this chapter, we will unpack that statement fully.
 
-Imagine a navigator with an unfinished chart. They sail southwest for three weeks, expecting to find a legendary island, and see only open water. They could crumple up the chart and curse the wasted time. Or they could write, in the appropriate place: “On this route, in this season, and within this observation range, no island was found.”
+A navigator carries an unfinished chart and sails southwest for three weeks, expecting to find a legendary island. They see only open water. They could crumple up the chart and curse the wasted time. Or they could write, in the appropriate place: “On this route, in this season, and within this observation range, no island was found.”
 
 The second wording may feel less satisfying, but it is much closer to reliable research. It does not inflate “we did not see it this time” into “it never exists,” nor does it pretend the three weeks had no value. It precisely records what was ruled out and which boundaries remain.
 
@@ -1985,7 +1981,7 @@ This is not empty self-consolation. It has real cash value: the time you have fo
 
 There is a trap here that beginners fall into especially easily: treating “rejecting an idea” as “finishing a piece of work.”
 
-Suppose you have a hypothesis: “After Bitcoin falls sharply overnight, it usually rebounds over the next hour.” You run a backtest and find that it is unprofitable. So you write three words in your notebook: “Doesn’t work.” Then you turn the page and move on.
+For example, you have a hypothesis: “After Bitcoin falls sharply overnight, it usually rebounds over the next hour.” You run a backtest and find that it is unprofitable. So you write three words in your notebook: “Doesn’t work.” Then you turn the page and move on.
 
 In doing so, you have learned almost nothing.
 
@@ -2069,7 +2065,7 @@ This lesson can be condensed into one sentence: **capital can stop because of an
 ## ✍️ Try It / Think About It
 
 1. **Write a closing report for a “failure.”** Find an idea you once abandoned—even something as simple as “I thought a moving average was very accurate, but it did not work when I tried it”—and add three lines: What exact statement did I falsify? What statement did I not test at all? If I were to start again, what would be the cheapest next step? You will find that merely forcing yourself to answer these three questions quietly turns that “failure” back into material.
-2. **Be a detective for the “four false falsifications.”** Imagine a friend rushes up to you and says, “I tested it—strategy XX simply doesn’t work.” Be the disappointing but reliable friend and ask one question for each of the four false falsifications. Write down those four questions—and remember: in the future, use this checklist on yourself before using it on anyone else.
+2. **Be a detective for the “four false falsifications.”** A friend rushes up to you and says, “I tested it—strategy XX simply doesn’t work.” Be the disappointing but reliable friend and ask one question for each of the four false falsifications. Write down those four questions—and remember: in the future, use this checklist on yourself before using it on anyone else.
 
 ---
 
@@ -2085,7 +2081,7 @@ But you do not have to do that. This final chapter is not about finding a myster
 
 ## Do Not Cast Your Net in the Big Ships’ Hunting Grounds
 
-Imagine an ocean. In the richest deep-sea fishing grounds, a whole line of industrial trawlers is anchored. They have sonar, nets several kilometers long, and freezer holds that let them remain at sea for three months. This is smart money’s hunting ground. If you row in on a tiny skiff to compete for the same tuna, there is only one outcome: you get run over without even making a splash.
+In the richest deep-sea fishing grounds, a whole line of industrial trawlers is anchored. They have sonar, nets several kilometers long, and freezer holds that let them remain at sea for three months. This is smart money’s hunting ground. If you row in on a tiny skiff to compete for the same tuna, there is only one outcome: you get run over without even making a splash.
 
 But this ocean is not made up only of deep-sea fishing grounds.
 
@@ -2179,7 +2175,7 @@ You do not need to prove that you can conquer the entire market. First find one 
 >
 >
 > **Pitfall One: Thinking that winning requires defeating large institutions head-on in speed and scale.**
-> You do not need to choose a battlefield where you are structurally disadvantaged. A more practical approach is to find questions that match your scale, horizon, data, and execution capabilities. But do not imagine that institutions are completely absent because of this; every positive result still needs to withstand tests of competition, capacity, and costs.
+> You do not need to choose a battlefield where you are structurally disadvantaged. A more practical approach is to find questions that match your scale, horizon, data, and execution capabilities. But do not conclude that institutions are completely absent because of this; every positive result still needs to withstand tests of competition, capacity, and costs.
 >
 >
 > **Pitfall Two: Assuming anything “obscure” is an opportunity.**
