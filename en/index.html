@@ -122,7 +122,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--serif);-webkit-f
 .toc-no{font-family:var(--mono);font-size:11px;color:var(--brass);min-width:22px;flex:none;text-align:right;}
 .toc-a.active .toc-no{color:var(--brass-bright);}
 .toc-t{overflow:hidden;text-overflow:ellipsis;}
-.main{grid-area:main;overflow-y:auto;position:relative;background-color:var(--paper);background-image:var(--paper-grain);background-size:720px 720px;background-attachment:local;background-blend-mode:normal;scrollbar-width:none;-ms-overflow-style:none;}.main::-webkit-scrollbar{display:none;}
+.main{grid-area:main;overflow-y:auto;overscroll-behavior-y:contain;position:relative;background-color:var(--paper);background-image:var(--paper-grain);background-size:720px 720px;background-attachment:local;background-blend-mode:normal;scrollbar-width:none;-ms-overflow-style:none;}.main::-webkit-scrollbar{display:none;}
 .screen{display:none;}
 .screen.active{display:block;}
 .wrap{max-width:41rem;margin:0 auto;padding:48px 26px 8px;}
@@ -2081,7 +2081,7 @@ Obscurity is neither necessary nor sufficient. Popular markets may contain risk 
  });
  function updateReadingProgress(){var d=main.scrollHeight-main.clientHeight;prog.style.setProperty('--progress',String(d>0?main.scrollTop/d:0));}
  var lastBarScroll=0;
- function syncTopbar(){var y=main.scrollTop,d=y-lastBarScroll,locked=reader.classList.contains('nav-open')||topbar.classList.contains('tools-open');if(y<64||locked)reader.classList.remove('topbar-hidden');else if(d>8)reader.classList.add('topbar-hidden');else if(d<-8)reader.classList.remove('topbar-hidden');if(Math.abs(d)>8||y<64)lastBarScroll=y;}
+ function syncTopbar(){var max=Math.max(0,main.scrollHeight-main.clientHeight),y=Math.max(0,Math.min(main.scrollTop,max)),d=y-lastBarScroll,locked=reader.classList.contains('nav-open')||topbar.classList.contains('tools-open'),hidden=reader.classList.contains('topbar-hidden'),atBottom=max-y<=2;if(y<64||locked)reader.classList.remove('topbar-hidden');else if(!atBottom||!hidden){if(d>8)reader.classList.add('topbar-hidden');else if(d<-8)reader.classList.remove('topbar-hidden');}if(atBottom||Math.abs(d)>8||y<64)lastBarScroll=y;}
  main.addEventListener('scroll',function(){updateReadingProgress();syncTopbar();queueRememberReading();},{passive:true});
  reader.addEventListener('mousemove',function(e){if(!isNarrow()&&e.clientY<=14){reader.classList.remove('topbar-hidden');lastBarScroll=main.scrollTop;}},{passive:true});
  window.addEventListener('pagehide',rememberReading);
