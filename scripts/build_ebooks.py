@@ -342,6 +342,7 @@ def validate_epub(path: Path, expected_sections: int) -> None:
         rendered = "\n".join(
             archive.read(name).decode("utf-8") for name in names if name.endswith(".xhtml")
         )
+        assert "**" not in rendered, "EPUB contains unrendered strong markup"
         assert not MARKER_RE.search(rendered), "emoji marker remained in EPUB"
         expected_callouts = sum(
             1
@@ -377,6 +378,7 @@ def validate_pdf(path: Path) -> None:
     )
     assert not radicals, f"PDF text uses CJK radical/stroke forms: {radicals}"
     assert "\ufffd" not in raw_text, "PDF text contains replacement characters"
+    assert "**" not in raw_text, "PDF contains unrendered strong markup"
     assert not MARKER_RE.search(raw_text), "emoji marker remained in PDF"
     assert reader.outline, "PDF has no document outline"
     assert reader.trailer["/Root"].get("/Lang") == LANG

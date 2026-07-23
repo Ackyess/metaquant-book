@@ -17,6 +17,7 @@ CALLOUT_RE = re.compile(
     r'<aside class="callout ([^"]+)" markdown="1">\s*(.*?)\s*</aside>',
     re.DOTALL,
 )
+STRONG_RE = re.compile(r"\*\*(?=\S)(.+?)(?<=\S)\*\*")
 
 
 def _renderer() -> mistune.Markdown:
@@ -45,6 +46,7 @@ def _normalize_footnotes(rendered: str) -> str:
 def markdown_to_html(source: str) -> str:
     """Render the subset of Markdown used in the book to HTML."""
     callouts: list[str] = []
+    source = STRONG_RE.sub(r"<strong>\1</strong>", source)
 
     def reserve_callout(match: re.Match[str]) -> str:
         kind, body = match.group(1), match.group(2)

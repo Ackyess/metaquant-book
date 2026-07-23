@@ -191,6 +191,7 @@ def check_reader(
         f"{relative_path}: empty or implausibly short concise section"
     )
     payload_html = "".join(sections.values())
+    assert "**" not in payload_html, f"{relative_path}: unrendered strong markup remains"
     assert payload_html.count('<div class="tablewrap">') == payload_html.count("<table>"), (
         f"{relative_path}: concise tables are not mobile-scroll wrapped"
     )
