@@ -1278,7 +1278,7 @@ Now do the brutal math with Chen: to climb from $40,000 back to $200,000, he doe
 
 This chapter is not about how to win. It is about something more fundamental: how to reduce the chance that one mistake ends the entire game. No matter how strong your forecasting skill is, it has no time to pay off if your risk limits allow a single tail event to destroy the account.
 
-## 1. Compounding Is Beautiful; Blowing Up Hurts: A Lesson in Asymmetric Arithmetic
+## Compounding Is Beautiful; Blowing Up Hurts: A Lesson in Asymmetric Arithmetic
 
 Let’s fully unpack Chen’s numbers, because they are the foundation of this chapter.
 
@@ -1321,7 +1321,7 @@ As losses deepen, the return needed to recover rises rapidly according to `loss 
 
 Risk management therefore protects against both a single crippling loss and many small, correlated losses accumulating in the same environment. Earning less reduces your ending value; a deep drawdown simultaneously shrinks your capital, makes recovery harder, and may force you to exit at the worst possible time.
 
-## 2. Position Sizing: Do Not Let Any One Bullet Kill You
+## Position Sizing: Do Not Let Any One Bullet Kill You
 
 Since large losses are so deadly, the first line of defense is to limit them at the source. That defense is called **position sizing**.
 
@@ -1337,7 +1337,7 @@ If the price can be exited near the planned level, the book loss is about $1,000
 
 This method separates “how much you like the trade” from “how much you should bet.” Confidence may affect whether you continue researching, but it must not cross an approved risk boundary: **do not let any single trade have the power to cripple the entire account.**
 
-## 3. Stop-Losses and Circuit Breakers: Two Gates to Automate as Much as Possible
+## Stop-Losses and Circuit Breakers: Two Gates to Automate as Much as Possible
 
 The previous section mentioned exiting when you are wrong. It sounds simple, but it is hard to do because it requires confronting human nature directly. We need two gates written in advance, executed by the system where possible and confirmed through monitoring, rather than leaving the final decision entirely to a panicked version of yourself.
 
@@ -1359,7 +1359,7 @@ Our lab once set a **5%** daily loss limit for a certain class of accounts. That
 >
 > **Misconception 2: “It is enough to keep the stop-loss in my head; I can cut it manually later.”** Exit conditions kept only in your head are easiest to reinterpret while losing. It becomes a complete gate only when written into the rules, triggered automatically where possible, and checked to ensure the order was actually sent and filled.
 
-## 4. Never Hold On and Add Ad Hoc: A Loss Cannot Rewrite Your Risk Budget
+## Never Hold On and Add Ad Hoc: A Loss Cannot Rewrite Your Risk Budget
 
 Here, “holding on” does not mean every instance of continuing to buy after a price falls. Scaling into a position that is written into the strategy in advance and does not increase total risk, or rebalancing under fixed rules, can be normal design. The truly dangerous action is different: a position is already losing, the original rules do not call for adding, yet you temporarily enlarge it to lower the average cost while pushing the original exit condition farther away.
 
@@ -1369,7 +1369,7 @@ It is especially deceptive because many small drawdowns really do rebound. You m
 
 So what the lab truly prohibits is **unregistered risk that is increased ad hoc because of a loss**. If you want to scale in, state before entry the conditions for every tranche, the maximum total position, and the final exit line. Do not wait until a loss occurs and then dress up an impulse as a strategy.
 
-## 5. Martingale: Hiding a Rare Catastrophic Loss Behind a String of Small Wins
+## Martingale: Hiding a Rare Catastrophic Loss Behind a String of Small Wins
 
 Holding on and adding has a more extreme, systematic cousin: the **Martingale**. It is often packaged as a high-win-rate robot: every time it loses, it doubles the next bet; as long as a later bet wins, it covers the preceding losses and earns the original small gain on top.
 
@@ -1401,7 +1401,7 @@ More importantly, doubling down **does not turn a negative-expectancy game into 
 >
 > These controls add operational friction, but that friction is meant to stop a one-time exception during a loss. Discipline is most valuable precisely when people are most anxious and most tempted to rewrite the rules.
 
-## 6. Think Differently: Treat Risk as a Budget You Spend First
+## Think Differently: Treat Risk as a Budget You Spend First
 
 The first five sections covered tools such as position sizing, stops, circuit breakers, and prohibitions on adding to losses. One more fundamental sequence must now be reversed: risk should be an ex ante budget, not an after-the-fact addition.
 
@@ -1436,13 +1436,13 @@ Risk management does not make a bad strategy good. It does something more fundam
 
 # Chapter 12: Portfolios—Don't Put All Your Eggs in One Correlation Basket
 
-## 1. “I Bought Ten Coins, So I’m Diversified, Right?”
+## “I Bought Ten Coins, So I’m Diversified, Right?”
 
 Lin divided his capital into ten parts and bought ten different cryptocurrencies, assuming that if one failed, the other nine would support him. Then the market fell over a weekend and all ten dropped at nearly the same time by similar amounts. He had not bought ten independent eggs; it was more like photographing the same egg ten times and putting one photograph in each of ten baskets.
 
 The problem was not too few holding names, but that the assets were exposed to similar risks. Diversification is not only about counting positions; it also depends on the **correlation** among them.
 
-## 2. What Diversification Really Means: Correlation, Not Quantity
+## What Diversification Really Means: Correlation, Not Quantity
 
 First, let’s explain a term we will use repeatedly in this chapter: **correlation**.
 
@@ -1469,7 +1469,7 @@ Diversification is therefore often called the closest thing to a “free lunch�
 
 So when someone says, “I own twenty names,” first ask whether those twenty are exposed to the same risks and whether they tend to fall together under stress. The number of names does not by itself prove diversification.
 
-## 3. Why Does Diversification Weaken in a Crisis?
+## Why Does Diversification Weaken in a Crisis?
 
 Is low correlation in ordinary periods enough to make a portfolio safe? No. **Correlation is not a fixed constant.** It changes with market regime, estimation window, and participant behavior. Assets that move separately in calm periods may all be sold when liquidity tightens or the whole market deleverages, causing their correlations to rise sharply; some pairs may even move almost in lockstep for a time.
 
@@ -1479,7 +1479,7 @@ To be precise, not every correlation automatically becomes +1 in every crisis, a
 
 So portfolio construction cannot rely on one full-period average correlation coefficient. You must also examine rolling correlations, stress periods, shared sources of liquidity, and whether several assets are actually bets on the same hidden risk. Diversification reduces everyday concentration; the position sizing and loss limits from the previous chapter control the damage when diversification weakens. They complement each other; neither can replace the other.
 
-## 4. How Can Multiple Strategies and Holdings Complement One Another?
+## How Can Multiple Strategies and Holdings Complement One Another?
 
 Instruments can diversify one another, and so can strategies sharing the same capital. The deeper question is whether those strategies rely on different mechanisms and whether their losing periods genuinely occur at different times.
 
@@ -1503,7 +1503,7 @@ Evaluating a new strategy therefore requires more than asking whether it has a p
 
 A strategy with positive net expectancy, or a clear hedging purpose, may not look impressive on its own. But if it fills in during other members’ slumps, its contribution to the portfolio may exceed that of a star strategy that only adds more of the same at the same time.
 
-## 5. How Should You Allocate the Money? From Equal Weighting to Risk Parity
+## How Should You Allocate the Money? From Equal Weighting to Risk Parity
 
 All right. Suppose you have chosen several members that are not highly correlated, whether assets or strategies. The next practical question is:
 
@@ -1547,7 +1547,7 @@ The difference between the two can be summarized as follows:
 
 A practical research sequence is: **use equal weighting as the benchmark first, then test more complex allocations.** If you adopt risk parity, you must also check whether covariance estimates are stable, whether rebalancing costs consume the benefit, and whether leverage on low-volatility assets introduces new tail risk. Any complex allocation method should prove more useful than a simple benchmark out of sample and after costs.
 
-## 6. Portfolio-Level Risk: Looking at One Piece Is Never Enough
+## Portfolio-Level Risk: Looking at One Piece Is Never Enough
 
 The preceding sections considered how members are selected and allocated, but portfolio risk cannot be inferred by inspecting each part separately. Every strategy and instrument may look sound on its own while the combination remains exposed to the same underlying risk.
 
@@ -1601,7 +1601,7 @@ An **irreversible gate** therefore separates paper research from real money. Pas
 
 This chapter explains how to cross the gate in stages, what evidence each stage requires, and who should approve the risk boundaries.
 
-## 1. Passing on Paper Does Not Mean It Can Run in Reality
+## Passing on Paper Does Not Mean It Can Run in Reality
 
 Chapter 7 explained that backtesting can eliminate ideas that clearly do not hold up, but it cannot guarantee real-world execution. At this point, we will not repeat what a backtest is. We will focus on the gap between it and live trading—the gap people most often overlook.
 
@@ -1611,7 +1611,7 @@ So passing on paper earns only the right to enter controlled validation. Your ex
 
 This brings us to the backbone of the chapter: staged rollout.
 
-## 2. Staged Rollout: Enter the Water One Step at a Time
+## Staged Rollout: Enter the Water One Step at a Time
 
 A strategy should enter live trading the way a swimmer moves from shallow water to deep water: in stages, with each stage testing only a limited set of questions and limiting the possible loss.
 
@@ -1623,7 +1623,7 @@ A strategy should enter live trading the way a swimmer moves from shallow water 
 
 All three stages need graduation criteria written in advance. Paper trading checks the engineering process; small-scale live trading measures real-world deviations; scaling re-estimates whether size is eroding the edge. If the standard is not met, remain at the current stage. Connecting these “the gate stays closed unless the standard is met” checkpoints creates the governance chain in the next section.
 
-## 3. The Governance Chain: A Series of Gates That Do Not Let You Through Easily
+## The Governance Chain: A Series of Gates That Do Not Let You Through Easily
 
 Link those checkpoints together, and you have a **governance chain (governance)**.
 
@@ -1635,7 +1635,7 @@ The default must be conservative because, when a risk-critical state cannot be e
 
 These controls reduce speed, but they leave a record of every opening of a gate and every temporary relaxation. Their purpose is not to eliminate every failure, but to prevent a system from expanding risk on its own when nobody is accountable and the evidence is insufficient.
 
-## 4. The Irreversible Boundary: People Approve the Boundary; Machines Execute Within It
+## The Irreversible Boundary: People Approve the Boundary; Machines Execute Within It
 
 “Human-in-the-loop” is often misunderstood to mean a person must manually click every live order. That would turn systematic trading back into manual trading, and it does not suit strategies that need timely execution.
 
@@ -1645,7 +1645,7 @@ Why deliberately keep friction around boundary-changing actions? Because they ch
 
 A mature governance chain should therefore answer three questions: who is authorized to open which gate? What evidence did they review when approving it? If something goes wrong, can the decision be traced back to that approval? Without these records, “someone is accountable” is only a slogan.
 
-## 5. Do Not Leave the Keys Lying Around: Credentials and Security
+## Do Not Leave the Keys Lying Around: Credentials and Security
 
 To let a program trade automatically for you, you must give it a key so it can log in to the exchange and place orders on your behalf. This key is an **API key**—think of it as your home’s access card. Whoever has it can use your account.
 
@@ -1657,7 +1657,7 @@ Credential management must observe at least three rules:
 
 These measures cannot eliminate the risk of credential exposure, but they can limit the damage caused by one credential error.
 
-## 6. Install the Dashboard and Red Button Before Going Live
+## Install the Dashboard and Red Button Before Going Live
 
 Monitoring and a kill switch must be in place before real money begins to run.
 
@@ -2050,7 +2050,7 @@ This glossary collects the core terms used in the main text, organized into seve
 
 Definitions have been compressed for introductory purposes; they are not complete legal, exchange, or statistical standards. In a specific market, the relevant contracts, fees, and rules still control.
 
-## I. Markets and Trading
+## Markets and Trading
 
 ### Trading Approaches and Risk Exposure
 
@@ -2104,7 +2104,7 @@ Definitions have been compressed for introductory purposes; they are not complet
 - **Arbitrage** — Locking in, or nearly locking in, a price difference with offsetting positions; under the ideal definition it is nearly risk-free after costs. Many uses of “arbitrage” in market speech are actually relative-value trades and still have basis, financing, execution, and tail risks.
 - **Market anomaly** — A phenomenon that conflicts with a benchmark model or simple efficiency explanation and repeatedly appears in data. It may arise from risk compensation, behavior, institutions, data problems, or decay after competition; it is not automatically tradable alpha.
 
-## II. Data
+## Data
 
 - **Garbage in, garbage out** — If input data are wrong, even a precise model will process the error into something that looks more like an answer.
 - **Timestamp** — A label recording when an event occurred, was published, was received, or was stored. Different time meanings cannot be mixed; time zones must also be unified.
@@ -2113,7 +2113,7 @@ Definitions have been compressed for introductory purposes; they are not complet
 - **Survivorship bias** — A sample retains only instruments, funds, or accounts that still existed later, omitting delisted, closed, and failed cases and thereby systematically flattering historical results.
 - **Silent failure** — A system does not explicitly error but has stopped updating, become misaligned, dropped data, or otherwise departed from expectation. It requires reconciliation, coverage, and freshness checks to find proactively.
 
-## III. Research Methods
+## Research Methods
 
 - **Hypothesis** — A proposition that data or observations can test, such as “when condition A appears, how does the distribution of future returns change?”
 - **Assumption** — A premise on which a model, mechanism, or calculation depends, such as “execution costs are approximately stable at this size.” An assumption is not the primary proposition being tested, but a wrong assumption changes the conclusion.
@@ -2136,7 +2136,7 @@ Definitions have been compressed for introductory purposes; they are not complet
 - **Curve fitting** — Continually adding degrees of freedom to fit data already seen. Fitting itself is a modeling tool; the problem is treating sample noise as an extrapolatable pattern.
 - **Research log** — A record preserving the prior specification, all exploratory variants, data versions, code versions, results, decision boundaries, and next questions. It makes negative results reusable and leaves evidence of later changes of story.
 
-## IV. Statistical Rigor
+## Statistical Rigor
 
 - **Overfitting** — A model learns accidental details in its sample too thoroughly, producing attractive in-sample results that fail on new data. Degrees of freedom, number of selections, and sample information jointly determine the risk; it is not that “complex models are inherently guilty.”
 - **Multiple testing** — When many tests are conducted in the same research family, the chance of at least one accidental good result rises. Correlated tests are not independent, but they still need unified accounting and adjustment.
@@ -2150,7 +2150,7 @@ Definitions have been compressed for introductory purposes; they are not complet
 - **Sharpe ratio** — Generally, average excess return divided by return volatility, often annualized. It does not fully describe skewness, tails, liquidity, or maximum drawdown, and is affected by sample length and serial correlation.
 - **Deflated Sharpe Ratio (DSR)** — A statistical adjustment that considers strategy selection, multiple trials, and factors such as skewness and kurtosis of the return distribution when interpreting an observed Sharpe ratio. It is not simply dividing Sharpe by the number of trials, and it cannot replace independent validation.
 
-## V. Risk, Capital, and Portfolios
+## Risk, Capital, and Portfolios
 
 - **Position** — Directional risk exposure to an instrument or strategy, expressible in units, notional value, or risk units; it is not merely “how much money was spent.”
 - **Position sizing** — The process of translating a risk budget, exit distance, volatility, liquidity, leverage, and portfolio exposure into an actual position.
@@ -2169,7 +2169,7 @@ Definitions have been compressed for introductory purposes; they are not complet
 - **Portfolio-level** — Looking at risk, cost, and constraints across all positions together. Individual strategies being safe does not mean that several correlated strategies remain safe when combined.
 - **Capacity** — The amount of capital a strategy can deploy before expected net returns are materially eroded by market impact, liquidity, and crowding. Capacity changes with markets and execution.
 
-## VI. Mindset and Research Behavior
+## Mindset and Research Behavior
 
 - **Confirmation bias** — Being more permissive toward evidence supporting one's view and more demanding toward opposing evidence, allowing the same proposition to escape decision indefinitely.
 - **Revenge trading** — Departing from original rules or expanding discretion or position size in order to “make back” losses quickly. Past account losses are not a new mechanism for the next trade.
@@ -2178,7 +2178,7 @@ Definitions have been compressed for introductory purposes; they are not complet
 - **Self-serving attribution bias** — Attributing good results to ability and bad results to environment or luck. Wins and losses should receive the same pre-specified standards and attribution audit.
 - **Moat** — A combination of conditions that makes an advantage hard to copy or erode, possibly including data, access, mechanism, capacity, execution, and organizational discipline. Rigor is a foundation; it does not create alpha by itself.
 
-## VII. Governance and Live Execution
+## Governance and Live Execution
 
 - **Governance chain / governance** — A set of responsibilities and controls from research to live trading specifying who can approve what, what evidence is required, and when activity must stop or escalate to review.
 - **Gate** — A strategy may enter the next stage only after reaching pre-written graduation conditions. A gate should retain version, evidence, and approval records.
