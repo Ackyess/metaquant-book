@@ -1,4 +1,4 @@
-var LANGUAGE_CACHE = "mq-language-v1";
+var LANGUAGE_CACHE = "mq-language-v2";
 
 self.addEventListener("install", function () {
   self.skipWaiting();

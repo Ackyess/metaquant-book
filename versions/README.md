@@ -5,6 +5,7 @@
 | `00-early-simplified.md` | 早期简体版本，供模型阅读与后续修订使用 |
 | `01-gpt-revision.md` | GPT 对抗审校后输出的出版修订稿 |
 | `02-manual-edit-snapshot.md` | 当前定稿形成前的一次手工修订快照 |
-| `../book.md` | 当前发布使用的 1.0 手工定稿 |
+| `03-humanizer-zh-round2.md` | 第二轮 humanizer-zh 精炼稿，供网页阅读器切换文风 |
+| `../book.md` | 当前发布使用的 1.1 手工定稿 |
 
-这些文件只用于追溯文本演变；在线阅读器以仓库根目录的 `book.md` 和 `index.html` 为准。
+前三个快照只用于追溯文本演变；在线阅读器以 `book.md` 为生活化版，并把 `03-humanizer-zh-round2.md` 作为精炼版。

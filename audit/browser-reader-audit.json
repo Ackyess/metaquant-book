@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-07-23T21:55:15Z",
+  "baseUrl": "http://127.0.0.1:13591",
+  "viewportDesktop": {
+    "width": 1280,
+    "height": 900
+  },
+  "viewportMobile": {
+    "width": 390,
+    "height": 844
+  },
+  "readers": {
+    "zh": {
+      "smoke": {
+        "desktopDialog": {
+          "x": 220,
+          "y": 159.015625,
+          "width": 840,
+          "height": 581.953125,
+          "clientHeight": 580,
+          "scrollHeight": 580,
+          "clientWidth": 838,
+          "scrollWidth": 838
+        },
+        "keyChapterDifferences": {
+          "01-what-is-quant": true,
+          "04-market-microstructure": true,
+          "07-backtesting": true,
+          "11-risk-management": true
+        },
+        "persistence": true,
+        "reselection": true,
+        "footnoteAfterSwap": true,
+        "keyboardNavigation": true,
+        "tocNavigation": true
+      },
+      "deepLinks": {
+        "postPrefaceBlocked": true,
+        "prefaceAllowed": true
+      },
+      "mobile": {
+        "dialog": {
+          "x": 0,
+          "y": 173.640625,
+          "width": 390,
+          "height": 670.359375,
+          "clientHeight": 669,
+          "scrollHeight": 669,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "internalScroll": false,
+        "footerReachable": true,
+        "horizontalOverflow": {
+          "doc": 0,
+          "body": 0
+        },
+        "mobileToc": true
+      }
+    },
+    "en": {
+      "smoke": {
+        "desktopDialog": {
+          "x": 220,
+          "y": 93.28125,
+          "width": 840,
+          "height": 713.421875,
+          "clientHeight": 711,
+          "scrollHeight": 711,
+          "clientWidth": 838,
+          "scrollWidth": 838
+        },
+        "keyChapterDifferences": {
+          "01-what-is-quant": true,
+          "04-market-microstructure": true,
+          "07-backtesting": true,
+          "11-risk-management": true
+        },
+        "persistence": true,
+        "reselection": true,
+        "footnoteAfterSwap": true,
+        "keyboardNavigation": true,
+        "tocNavigation": true
+      },
+      "deepLinks": {
+        "postPrefaceBlocked": true,
+        "prefaceAllowed": true
+      },
+      "mobile": {
+        "dialog": {
+          "x": 0,
+          "y": 67.53125,
+          "width": 390,
+          "height": 776.46875,
+          "clientHeight": 775,
+          "scrollHeight": 844,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "internalScroll": true,
+        "footerReachable": true,
+        "horizontalOverflow": {
+          "doc": 0,
+          "body": 0
+        },
+        "mobileToc": true
+      }
+    }
+  },
+  "crossLanguage": {
+    "conciseZhToEn": true,
+    "storyEnToZh": true
+  },
+  "errors": [],
+  "passed": true
+}

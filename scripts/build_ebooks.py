@@ -18,8 +18,7 @@ from pathlib import Path
 from pathlib import PurePosixPath
 from xml.etree import ElementTree
 
-import markdown
-from playwright.sync_api import sync_playwright
+from markdown_compat import markdown_to_html
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import NameObject, TextStringObject
 
@@ -30,14 +29,15 @@ EN_SOURCE = ROOT / "book.en.md"
 ZH_READER = ROOT / "index.html"
 EN_READER = ROOT / "en" / "index.html"
 OUTPUT = ROOT / "output"
-EPUB_PATH = OUTPUT / "epub" / "诚实的量化交易-1.0.epub"
-PDF_PATH = OUTPUT / "pdf" / "诚实的量化交易-1.0.pdf"
+EPUB_PATH = OUTPUT / "epub" / "诚实的量化交易-1.1.epub"
+PDF_PATH = OUTPUT / "pdf" / "诚实的量化交易-1.1.pdf"
 COVER_PATH = ROOT / "assets" / "cover-ai-v2.png"
 
 TITLE = "诚实的量化交易：写给新手的第一堂课"
 AUTHOR = "@Ackyess"
 LANG = "zh-CN"
 UID = "urn:uuid:" + str(uuid.uuid5(uuid.NAMESPACE_URL, "https://quant.leooo.fun/"))
+
 
 SLUGS = [
     "00-preface",
@@ -156,11 +156,7 @@ def split_sections(source: str) -> list[Section]:
         body = source[match.end() : end].strip()
         body = re.sub(r"\n\s*---\s*$", "", body).strip()
         body = re.sub(r"(?m)^# 如何阅读本书$", "## 如何阅读本书", body)
-        rendered = markdown.markdown(
-            transform_callouts(body),
-            extensions=MARKDOWN_EXTENSIONS,
-            output_format="xhtml",
-        )
+        rendered = markdown_to_html(transform_callouts(body))
         sections.append(Section(slug, title, body, rendered))
     return sections
 
@@ -273,17 +269,21 @@ def build_epub(sections: list[Section], cover_path: Path, output: Path) -> None:
 
 
 PRINT_CSS = """
-*{box-sizing:border-box} html{font-size:10.5pt} body{margin:0;color:#20272b;font-family:SimSun,"Songti SC",serif;line-height:1.78}
-h1,h2,h3{font-family:"Microsoft YaHei","PingFang SC",sans-serif;page-break-after:avoid;color:#172229}
+*{box-sizing:border-box} html{font-size:10.5pt} body{margin:0;color:#20272b;font-family:SimSun,"Songti SC","Noto Serif CJK SC","Source Han Serif SC",serif;line-height:1.78}
+h1,h2,h3{font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC","Source Han Sans SC",sans-serif;page-break-after:avoid;color:#172229}
 h1{font-size:24pt;line-height:1.25;margin:0 0 16mm} h2{font-size:15pt;margin:9mm 0 3mm;padding-bottom:1.5mm;border-bottom:.25mm solid #c9ceca} h3{font-size:12pt;margin:6mm 0 2mm;color:#315f5b}
 p{margin:0 0 4.2mm;text-align:justify;orphans:3;widows:3} strong{font-weight:700} a{color:inherit;text-decoration:none}
 ul,ol{padding-left:1.4em;margin:0 0 4mm} li{margin:1.2mm 0} blockquote{margin:5mm 0;padding:2.5mm 4mm;border-left:1mm solid #8da5a1;background:#f3f5f3;color:#39423e;break-inside:avoid}
 hr{border:0;border-top:.25mm solid #d1d4d1;margin:8mm 0} code{font-family:Consolas,monospace;background:#f0f0ec;padding:0 .7mm} pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:8.5pt}
 table{border-collapse:collapse;width:100%;table-layout:fixed;margin:5mm 0;font-size:8.7pt;break-inside:avoid} th,td{border:.25mm solid #c4cac6;padding:1.6mm 2mm;overflow-wrap:anywhere} th{background:#eef2ef}
 .callout{margin:5mm 0;padding:3mm 4mm;border:.25mm solid #d2d7d3;border-left:1mm solid #7d8780;background:#f8faf8;break-inside:avoid}.callout.warn{border-left-color:#a86b24}.callout.lab{border-left-color:#39706c;break-inside:auto;box-decoration-break:clone;-webkit-box-decoration-break:clone}.callout.points{border-left-color:#39434a}.callout.exercise{border-left-color:#9a742f;border-left-style:dashed}
-.callout>p:first-child,.callout>h3:first-child{font-family:"Microsoft YaHei","PingFang SC",sans-serif;font-weight:700;margin-top:0;margin-bottom:2.5mm;color:#24312f}.callout>p:last-child,.callout>ul:last-child,.callout>ol:last-child{margin-bottom:0}
+.callout>p:first-child,.callout>h3:first-child{font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC","Source Han Sans SC",sans-serif;font-weight:700;margin-top:0;margin-bottom:2.5mm;color:#24312f}.callout>p:last-child,.callout>ul:last-child,.callout>ol:last-child{margin-bottom:0}
 .colophon{break-after:page;padding-top:42mm}.colophon h1{margin-bottom:9mm}.colophon p{color:#555d59}.toc{break-after:page}.toc h1{margin-bottom:5mm}.toc ol{list-style:none;padding:0;columns:2;column-gap:9mm;font-size:8.7pt;line-height:1.35}.toc li{break-inside:avoid;border-bottom:.25mm dotted #c8cdca;padding:.7mm 0}
 .chapter{break-before:page}.chapter:first-of-type{break-before:auto}.chapter>.footnote{font-size:8pt;line-height:1.45;color:#555d59;border-top:.25mm solid #d1d4d1;margin-top:4mm;padding-top:1.5mm}.chapter>.footnote>hr{display:none}.chapter>.footnote ol{margin:0;padding-left:1.2em}.chapter>.footnote li{margin:0}
+"""
+
+PRINT_PAGE_CSS = """
+@page{size:A5;margin:15mm 14mm 17mm 14mm;@bottom-center{content:counter(page);font:8px Arial;color:#777}}
 """
 
 
@@ -294,10 +294,18 @@ def print_html(sections: list[Section]) -> str:
         for s in sections
     )
     colophon = '<section class="colophon"><h1>版权与许可</h1><p>作者：@Ackyess</p><p>© 2026 @Ackyess</p><p>本书文字、封面及生成的 EPUB/PDF 内容采用 CC BY-SA 4.0 许可；阅读器代码与构建脚本采用 MIT License。</p><p>github.com/Ackyess/metaquant-book</p></section>'
-    return f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><title>{TITLE}</title><style>{PRINT_CSS}</style></head><body>{colophon}<nav class="toc"><h1>目录</h1><ol>{toc}</ol></nav>{chapters}</body></html>'''
+    return f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><title>{TITLE}</title><style>{PRINT_CSS}{PRINT_PAGE_CSS}</style></head><body>{colophon}<nav class="toc"><h1>目录</h1><ol>{toc}</ol></nav>{chapters}</body></html>'''
 
 
 def build_pdf(sections: list[Section], cover_path: Path, output: Path) -> None:
+    try:
+        from weasyprint import HTML
+    except (ImportError, OSError) as exc:
+        raise RuntimeError(
+            "PDF generation requires WeasyPrint and its native Pango dependencies. "
+            "See https://doc.courtbouillon.org/weasyprint/stable/first_steps.html"
+        ) from exc
+
     output.parent.mkdir(parents=True, exist_ok=True)
     cover_data = base64.b64encode(cover_path.read_bytes()).decode("ascii")
     cover_html = f'''<!doctype html><html lang="{LANG}"><head><meta charset="utf-8"><style>@page{{size:A5;margin:0}}html,body{{margin:0;width:100%;height:100%;background:#0d141c}}img{{width:100%;height:100%;object-fit:cover;display:block}}</style></head><body><img src="data:image/png;base64,{cover_data}" alt="《诚实的量化交易》封面"></body></html>'''
@@ -305,27 +313,8 @@ def build_pdf(sections: list[Section], cover_path: Path, output: Path) -> None:
     with tempfile.TemporaryDirectory(prefix="metaquant-pdf-") as temporary:
         temp = Path(temporary)
         cover_pdf, content_pdf = temp / "cover.pdf", temp / "content.pdf"
-        with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(
-                executable_path="C:/Program Files/Google/Chrome/Application/chrome.exe",
-                headless=True,
-            )
-            page = browser.new_page()
-            page.set_content(cover_html, wait_until="load")
-            page.pdf(path=str(cover_pdf), format="A5", print_background=True, margin={"top": "0", "right": "0", "bottom": "0", "left": "0"})
-            page.set_content(print_html(sections), wait_until="load")
-            page.pdf(
-                path=str(content_pdf),
-                format="A5",
-                print_background=True,
-                display_header_footer=True,
-                header_template="<span></span>",
-                footer_template='<div style="font:8px Arial;color:#777;width:100%;text-align:center"><span class="pageNumber"></span></div>',
-                margin={"top": "15mm", "right": "14mm", "bottom": "17mm", "left": "14mm"},
-                outline=True,
-                tagged=True,
-            )
-            browser.close()
+        HTML(string=cover_html, base_url=str(ROOT)).write_pdf(str(cover_pdf))
+        HTML(string=print_html(sections), base_url=str(ROOT)).write_pdf(str(content_pdf))
 
         writer = PdfWriter()
         writer.append(str(cover_pdf))
@@ -375,9 +364,19 @@ def validate_pdf(path: Path) -> None:
         "",
         unicodedata.normalize("NFKC", raw_text),
     )
-    expected = ("前言：写在最前面", "附录B：新手上路检查清单与延伸阅读")
-    assert all(unicodedata.normalize("NFKC", title) in text for title in expected)
-    assert not any("\u2f00" <= char <= "\u2fdf" for char in raw_text), "PDF text uses CJK radical forms"
+    expected = [section.title for section in split_sections(SOURCE.read_text(encoding="utf-8"))]
+    missing = [
+        title
+        for title in expected
+        if re.sub(r"\s+", "", unicodedata.normalize("NFKC", title)) not in text
+    ]
+    assert not missing, f"PDF is missing section titles: {missing}"
+    radical_ranges = (("\u2e80", "\u2eff"), ("\u2f00", "\u2fdf"), ("\u31c0", "\u31ef"))
+    radicals = sorted(
+        {char for char in raw_text if any(start <= char <= end for start, end in radical_ranges)}
+    )
+    assert not radicals, f"PDF text uses CJK radical/stroke forms: {radicals}"
+    assert "\ufffd" not in raw_text, "PDF text contains replacement characters"
     assert not MARKER_RE.search(raw_text), "emoji marker remained in PDF"
     assert reader.outline, "PDF has no document outline"
     assert reader.trailer["/Root"].get("/Lang") == LANG
@@ -407,8 +406,8 @@ def validate_bilingual_reader() -> None:
     assert re.findall(r'\bdata-target="([^"]+)"', en_html) == SLUGS
     assert len(re.findall(r'<button\b[^>]*\bclass="footnote-ref"', en_html)) == 6
     assert re.search(r'<html\b[^>]*\blang="en"', en_html)
-    assert 'id="langBtn"' in zh_html and 'href="en/"' in zh_html
-    assert 'id="langBtn"' in en_html and 'href="../"' in en_html
+    assert 'id="langBtn"' in zh_html and 'href="en/?switch=1"' in zh_html
+    assert 'id="langBtn"' in en_html and 'href="../?switch=1"' in en_html
     assert "languageLink.hash='#'+ids[cur]" in zh_html
     assert "languageLink.hash='#'+ids[cur]" in en_html
     assert "mq-reading-position-v1-en" in en_html

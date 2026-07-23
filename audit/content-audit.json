@@ -1,0 +1,644 @@
+{
+  "generatedAt": "2026-07-23T21:55:14Z",
+  "passed": true,
+  "failures": [],
+  "checks": {
+    "zhStructurePreserved": true,
+    "enStructurePreserved": true,
+    "crossLanguageSignatureParityStory": true,
+    "crossLanguageSignatureParityConcise": true,
+    "noCjkInEnglishConcise": true,
+    "noUnfinishedMarkers": true,
+    "noFormulaicImagine": true,
+    "noAdjacentDuplicateParagraphs": true,
+    "riskBoundariesZh": true,
+    "riskBoundariesEn": true,
+    "browserAuditPassed": true,
+    "existingEbookAndReaderValidationPassed": true
+  },
+  "sources": {
+    "zh_story": {
+      "path": "book.md",
+      "sha256": "ed58bc57ebd8fb126472af3f11d5b13a5dc404d51c3c4ed0ef196a40e4e9bca5",
+      "bytes": 250267,
+      "characters": 92843,
+      "lines": 2534,
+      "signature": {
+        "h1": 22,
+        "h2": 147,
+        "h3": 18,
+        "footnoteDefinitions": [
+          "case-provenance",
+          "alpha-boundary",
+          "index-point-in-time",
+          "dsr-selection",
+          "risk-five-percent",
+          "low-correlation"
+        ],
+        "footnoteReferences": {
+          "alpha-boundary": 2,
+          "case-provenance": 2,
+          "dsr-selection": 2,
+          "index-point-in-time": 2,
+          "low-correlation": 2,
+          "risk-five-percent": 2
+        },
+        "callouts": {
+          "⚠️": 20,
+          "🔬": 11,
+          "📌": 17,
+          "✍️": 17
+        },
+        "tables": 20,
+        "tasks": 53,
+        "unordered": 247,
+        "ordered": 39
+      },
+      "adjacentDuplicateParagraphs": []
+    },
+    "zh_concise": {
+      "path": "versions\\03-humanizer-zh-round2.md",
+      "sha256": "34862417402cdf068594387d447aea1e0b56b5ff5395b011d8d5443e7edd7b8c",
+      "bytes": 215059,
+      "characters": 80736,
+      "lines": 2359,
+      "signature": {
+        "h1": 22,
+        "h2": 147,
+        "h3": 18,
+        "footnoteDefinitions": [
+          "case-provenance",
+          "alpha-boundary",
+          "index-point-in-time",
+          "dsr-selection",
+          "risk-five-percent",
+          "low-correlation"
+        ],
+        "footnoteReferences": {
+          "alpha-boundary": 2,
+          "case-provenance": 2,
+          "dsr-selection": 2,
+          "index-point-in-time": 2,
+          "low-correlation": 2,
+          "risk-five-percent": 2
+        },
+        "callouts": {
+          "⚠️": 20,
+          "🔬": 11,
+          "📌": 17,
+          "✍️": 17
+        },
+        "tables": 20,
+        "tasks": 53,
+        "unordered": 247,
+        "ordered": 39
+      },
+      "adjacentDuplicateParagraphs": []
+    },
+    "en_story": {
+      "path": "book.en.md",
+      "sha256": "8d97a27311f569c196f8e75051b0ee6fc4ad5e141500b586677ce79b55835794",
+      "bytes": 298289,
+      "characters": 294775,
+      "lines": 2536,
+      "signature": {
+        "h1": 22,
+        "h2": 147,
+        "h3": 18,
+        "footnoteDefinitions": [
+          "case-provenance",
+          "alpha-boundary",
+          "index-point-in-time",
+          "dsr-selection",
+          "risk-five-percent",
+          "low-correlation"
+        ],
+        "footnoteReferences": {
+          "alpha-boundary": 2,
+          "case-provenance": 2,
+          "dsr-selection": 2,
+          "index-point-in-time": 2,
+          "low-correlation": 2,
+          "risk-five-percent": 2
+        },
+        "callouts": {
+          "⚠️": 20,
+          "🔬": 11,
+          "📌": 17,
+          "✍️": 17
+        },
+        "tables": 20,
+        "tasks": 53,
+        "unordered": 247,
+        "ordered": 39
+      },
+      "adjacentDuplicateParagraphs": []
+    },
+    "en_concise": {
+      "path": "versions\\03-humanizer-en-round2.md",
+      "sha256": "c5e8521574d5a311d412c3087779fb487e3d1ce0517ca50bb07911edd54dbb58",
+      "bytes": 262778,
+      "characters": 260267,
+      "lines": 2361,
+      "signature": {
+        "h1": 22,
+        "h2": 147,
+        "h3": 18,
+        "footnoteDefinitions": [
+          "case-provenance",
+          "alpha-boundary",
+          "index-point-in-time",
+          "dsr-selection",
+          "risk-five-percent",
+          "low-correlation"
+        ],
+        "footnoteReferences": {
+          "alpha-boundary": 2,
+          "case-provenance": 2,
+          "dsr-selection": 2,
+          "index-point-in-time": 2,
+          "low-correlation": 2,
+          "risk-five-percent": 2
+        },
+        "callouts": {
+          "⚠️": 20,
+          "🔬": 11,
+          "📌": 17,
+          "✍️": 17
+        },
+        "tables": 20,
+        "tasks": 53,
+        "unordered": 247,
+        "ordered": 39
+      },
+      "adjacentDuplicateParagraphs": []
+    }
+  },
+  "editionPairs": {
+    "zh": {
+      "full": "book.md",
+      "concise": "versions\\03-humanizer-zh-round2.md",
+      "overallCharacterRatio": 0.8696,
+      "signatureEqual": true,
+      "headingsEqual": true,
+      "sections": [
+        {
+          "title": "《诚实的量化交易：写给新手的第一堂课》",
+          "fullCharacters": 3,
+          "conciseCharacters": 3,
+          "ratio": 1.0,
+          "changed": false,
+          "fullParagraphBlocks": 1,
+          "conciseParagraphBlocks": 1
+        },
+        {
+          "title": "前言：写在最前面",
+          "fullCharacters": 1256,
+          "conciseCharacters": 1121,
+          "ratio": 0.8925,
+          "changed": true,
+          "fullParagraphBlocks": 12,
+          "conciseParagraphBlocks": 11
+        },
+        {
+          "title": "如何阅读本书",
+          "fullCharacters": 1893,
+          "conciseCharacters": 1604,
+          "ratio": 0.8473,
+          "changed": true,
+          "fullParagraphBlocks": 22,
+          "conciseParagraphBlocks": 22
+        },
+        {
+          "title": "第1章 量化交易：在不确定中寻找长期胜算",
+          "fullCharacters": 4897,
+          "conciseCharacters": 4106,
+          "ratio": 0.8385,
+          "changed": true,
+          "fullParagraphBlocks": 43,
+          "conciseParagraphBlocks": 40
+        },
+        {
+          "title": "第2章 市场几乎是有效的：为什么赚钱这么难",
+          "fullCharacters": 3519,
+          "conciseCharacters": 3211,
+          "ratio": 0.9125,
+          "changed": true,
+          "fullParagraphBlocks": 28,
+          "conciseParagraphBlocks": 26
+        },
+        {
+          "title": "第3章 量化交易员真正的工作：研究循环与可信结论",
+          "fullCharacters": 3013,
+          "conciseCharacters": 2357,
+          "ratio": 0.7823,
+          "changed": true,
+          "fullParagraphBlocks": 31,
+          "conciseParagraphBlocks": 28
+        },
+        {
+          "title": "第4章 市场是怎么运作的：订单簿与流动性",
+          "fullCharacters": 5745,
+          "conciseCharacters": 5388,
+          "ratio": 0.9379,
+          "changed": true,
+          "fullParagraphBlocks": 39,
+          "conciseParagraphBlocks": 36
+        },
+        {
+          "title": "第5章 数据是命根子：干净数据与前视偏差",
+          "fullCharacters": 5156,
+          "conciseCharacters": 4185,
+          "ratio": 0.8117,
+          "changed": true,
+          "fullParagraphBlocks": 44,
+          "conciseParagraphBlocks": 40
+        },
+        {
+          "title": "第6章 从直觉到假说：把「我觉得」变成可以被证伪的一句话",
+          "fullCharacters": 5884,
+          "conciseCharacters": 4982,
+          "ratio": 0.8467,
+          "changed": true,
+          "fullParagraphBlocks": 57,
+          "conciseParagraphBlocks": 53
+        },
+        {
+          "title": "第7章 回测：你的时光机，也是你的照妖镜",
+          "fullCharacters": 3819,
+          "conciseCharacters": 3367,
+          "ratio": 0.8816,
+          "changed": true,
+          "fullParagraphBlocks": 45,
+          "conciseParagraphBlocks": 38
+        },
+        {
+          "title": "第8章 统计严谨：为什么你的「圣杯」多半是噪声",
+          "fullCharacters": 5895,
+          "conciseCharacters": 4472,
+          "ratio": 0.7586,
+          "changed": true,
+          "fullParagraphBlocks": 60,
+          "conciseParagraphBlocks": 47
+        },
+        {
+          "title": "第9章 信号与因子：一个想法如何变成一条可交易的规则",
+          "fullCharacters": 3659,
+          "conciseCharacters": 3434,
+          "ratio": 0.9385,
+          "changed": true,
+          "fullParagraphBlocks": 31,
+          "conciseParagraphBlocks": 29
+        },
+        {
+          "title": "第10章 成交没那么便宜：交易成本与悲观成交",
+          "fullCharacters": 3367,
+          "conciseCharacters": 3164,
+          "ratio": 0.9397,
+          "changed": true,
+          "fullParagraphBlocks": 35,
+          "conciseParagraphBlocks": 34
+        },
+        {
+          "title": "第11章 风险管理：先想怎么不死，再想怎么赢",
+          "fullCharacters": 5501,
+          "conciseCharacters": 5197,
+          "ratio": 0.9447,
+          "changed": true,
+          "fullParagraphBlocks": 40,
+          "conciseParagraphBlocks": 40
+        },
+        {
+          "title": "第12章 投资组合：别把鸡蛋放在同一个相关性里",
+          "fullCharacters": 6225,
+          "conciseCharacters": 4855,
+          "ratio": 0.7799,
+          "changed": true,
+          "fullParagraphBlocks": 71,
+          "conciseParagraphBlocks": 55
+        },
+        {
+          "title": "第13章 从研究到实盘：治理、纪律与那道不可逆的门",
+          "fullCharacters": 5325,
+          "conciseCharacters": 4324,
+          "ratio": 0.812,
+          "changed": true,
+          "fullParagraphBlocks": 33,
+          "conciseParagraphBlocks": 33
+        },
+        {
+          "title": "第14章 常见的坑与人性：确认偏误、报复性交易与沉没成本",
+          "fullCharacters": 4188,
+          "conciseCharacters": 3743,
+          "ratio": 0.8937,
+          "changed": true,
+          "fullParagraphBlocks": 41,
+          "conciseParagraphBlocks": 39
+        },
+        {
+          "title": "第15章 负结果是知识：像科学家一样持续精进",
+          "fullCharacters": 4492,
+          "conciseCharacters": 3197,
+          "ratio": 0.7117,
+          "changed": true,
+          "fullParagraphBlocks": 40,
+          "conciseParagraphBlocks": 35
+        },
+        {
+          "title": "第16章 找到你的角落：规模匹配、容量与真正的护城河",
+          "fullCharacters": 4103,
+          "conciseCharacters": 3207,
+          "ratio": 0.7816,
+          "changed": true,
+          "fullParagraphBlocks": 47,
+          "conciseParagraphBlocks": 33
+        },
+        {
+          "title": "结语：悲观者的工具，乐观者的心",
+          "fullCharacters": 585,
+          "conciseCharacters": 501,
+          "ratio": 0.8564,
+          "changed": true,
+          "fullParagraphBlocks": 10,
+          "conciseParagraphBlocks": 7
+        },
+        {
+          "title": "附录A：量化术语小词典",
+          "fullCharacters": 8532,
+          "conciseCharacters": 8532,
+          "ratio": 1.0,
+          "changed": false,
+          "fullParagraphBlocks": 14,
+          "conciseParagraphBlocks": 14
+        },
+        {
+          "title": "附录B：新手上路检查清单与延伸阅读",
+          "fullCharacters": 5209,
+          "conciseCharacters": 5209,
+          "ratio": 1.0,
+          "changed": false,
+          "fullParagraphBlocks": 37,
+          "conciseParagraphBlocks": 37
+        }
+      ]
+    },
+    "en": {
+      "full": "book.en.md",
+      "concise": "versions\\03-humanizer-en-round2.md",
+      "overallCharacterRatio": 0.8829,
+      "signatureEqual": true,
+      "headingsEqual": true,
+      "sections": [
+        {
+          "title": "*Honest Quantitative Trading: A First Lesson for Beginners*",
+          "fullCharacters": 3,
+          "conciseCharacters": 3,
+          "ratio": 1.0,
+          "changed": false,
+          "fullParagraphBlocks": 1,
+          "conciseParagraphBlocks": 1
+        },
+        {
+          "title": "Preface: A Few Words Before We Begin",
+          "fullCharacters": 4394,
+          "conciseCharacters": 3950,
+          "ratio": 0.899,
+          "changed": true,
+          "fullParagraphBlocks": 12,
+          "conciseParagraphBlocks": 11
+        },
+        {
+          "title": "How to Read This Book",
+          "fullCharacters": 6031,
+          "conciseCharacters": 5085,
+          "ratio": 0.8431,
+          "changed": true,
+          "fullParagraphBlocks": 22,
+          "conciseParagraphBlocks": 22
+        },
+        {
+          "title": "Chapter 1: Quantitative Trading—Seeking a Long-Term Edge in an Uncertain World",
+          "fullCharacters": 16726,
+          "conciseCharacters": 14221,
+          "ratio": 0.8502,
+          "changed": true,
+          "fullParagraphBlocks": 43,
+          "conciseParagraphBlocks": 40
+        },
+        {
+          "title": "Chapter 2: Markets Are Nearly Efficient—Why Making Money Is So Hard",
+          "fullCharacters": 11808,
+          "conciseCharacters": 11124,
+          "ratio": 0.9421,
+          "changed": true,
+          "fullParagraphBlocks": 28,
+          "conciseParagraphBlocks": 26
+        },
+        {
+          "title": "Chapter 3: What Quantitative Traders Actually Do: The Research Cycle and Credible Conclusions",
+          "fullCharacters": 9681,
+          "conciseCharacters": 8014,
+          "ratio": 0.8278,
+          "changed": true,
+          "fullParagraphBlocks": 31,
+          "conciseParagraphBlocks": 28
+        },
+        {
+          "title": "Chapter 4: How Markets Work: Order Books and Liquidity",
+          "fullCharacters": 14454,
+          "conciseCharacters": 13459,
+          "ratio": 0.9312,
+          "changed": true,
+          "fullParagraphBlocks": 39,
+          "conciseParagraphBlocks": 36
+        },
+        {
+          "title": "Chapter 5: Data Is Your Lifeline: Clean Data and Look-Ahead Bias",
+          "fullCharacters": 16553,
+          "conciseCharacters": 13728,
+          "ratio": 0.8293,
+          "changed": true,
+          "fullParagraphBlocks": 44,
+          "conciseParagraphBlocks": 40
+        },
+        {
+          "title": "Chapter 6: From Intuition to Hypothesis: Turning “I Think” into a Falsifiable Statement",
+          "fullCharacters": 18980,
+          "conciseCharacters": 16656,
+          "ratio": 0.8776,
+          "changed": true,
+          "fullParagraphBlocks": 57,
+          "conciseParagraphBlocks": 53
+        },
+        {
+          "title": "Chapter 7: Backtesting: Your Time Machine and Your Mirror",
+          "fullCharacters": 12798,
+          "conciseCharacters": 11544,
+          "ratio": 0.902,
+          "changed": true,
+          "fullParagraphBlocks": 45,
+          "conciseParagraphBlocks": 38
+        },
+        {
+          "title": "Chapter 8: Statistical Rigor: Why Your “Holy Grail” Is Probably Noise",
+          "fullCharacters": 18738,
+          "conciseCharacters": 15009,
+          "ratio": 0.801,
+          "changed": true,
+          "fullParagraphBlocks": 62,
+          "conciseParagraphBlocks": 49
+        },
+        {
+          "title": "Chapter 9: Signals and Factors—How an Idea Becomes a Tradable Rule",
+          "fullCharacters": 11872,
+          "conciseCharacters": 11172,
+          "ratio": 0.941,
+          "changed": true,
+          "fullParagraphBlocks": 31,
+          "conciseParagraphBlocks": 29
+        },
+        {
+          "title": "Chapter 10: Execution Isn't Cheap—Transaction Costs and Conservative Fill Assumptions",
+          "fullCharacters": 11789,
+          "conciseCharacters": 11167,
+          "ratio": 0.9472,
+          "changed": true,
+          "fullParagraphBlocks": 35,
+          "conciseParagraphBlocks": 34
+        },
+        {
+          "title": "Chapter 11: Risk Management—Survive First, Then Think About Winning",
+          "fullCharacters": 17290,
+          "conciseCharacters": 16228,
+          "ratio": 0.9386,
+          "changed": true,
+          "fullParagraphBlocks": 40,
+          "conciseParagraphBlocks": 40
+        },
+        {
+          "title": "Chapter 12: Portfolios—Don't Put All Your Eggs in One Correlation Basket",
+          "fullCharacters": 19672,
+          "conciseCharacters": 16062,
+          "ratio": 0.8165,
+          "changed": true,
+          "fullParagraphBlocks": 71,
+          "conciseParagraphBlocks": 55
+        },
+        {
+          "title": "Chapter 13: From Research to Live Trading: Governance, Discipline, and the Irreversible Gate",
+          "fullCharacters": 17940,
+          "conciseCharacters": 15086,
+          "ratio": 0.8409,
+          "changed": true,
+          "fullParagraphBlocks": 33,
+          "conciseParagraphBlocks": 33
+        },
+        {
+          "title": "Chapter 14: Common Traps and Human Nature: Confirmation Bias, Revenge Trading, and Sunk Costs",
+          "fullCharacters": 14331,
+          "conciseCharacters": 13030,
+          "ratio": 0.9092,
+          "changed": true,
+          "fullParagraphBlocks": 41,
+          "conciseParagraphBlocks": 39
+        },
+        {
+          "title": "Chapter 15: Negative Results Are Knowledge: Keep Improving Like a Scientist",
+          "fullCharacters": 15063,
+          "conciseCharacters": 11151,
+          "ratio": 0.7403,
+          "changed": true,
+          "fullParagraphBlocks": 40,
+          "conciseParagraphBlocks": 35
+        },
+        {
+          "title": "Chapter 16: Find Your Corner: Scale Matching, Capacity, and a Real Moat",
+          "fullCharacters": 14332,
+          "conciseCharacters": 11450,
+          "ratio": 0.7989,
+          "changed": true,
+          "fullParagraphBlocks": 47,
+          "conciseParagraphBlocks": 33
+        },
+        {
+          "title": "Conclusion: The Tools of a Pessimist, the Heart of an Optimist",
+          "fullCharacters": 2063,
+          "conciseCharacters": 1871,
+          "ratio": 0.9069,
+          "changed": true,
+          "fullParagraphBlocks": 10,
+          "conciseParagraphBlocks": 7
+        },
+        {
+          "title": "Appendix A: A Short Glossary of Quantitative Terms",
+          "fullCharacters": 23362,
+          "conciseCharacters": 23362,
+          "ratio": 1.0,
+          "changed": false,
+          "fullParagraphBlocks": 14,
+          "conciseParagraphBlocks": 14
+        },
+        {
+          "title": "Appendix B: Beginner Checklists and Further Reading",
+          "fullCharacters": 15295,
+          "conciseCharacters": 15295,
+          "ratio": 1.0,
+          "changed": false,
+          "fullParagraphBlocks": 37,
+          "conciseParagraphBlocks": 37
+        }
+      ]
+    }
+  },
+  "browserAudit": {
+    "path": "audit\\browser-reader-audit.json",
+    "generatedAt": "2026-07-23T21:53:28Z",
+    "passed": true,
+    "errors": [],
+    "crossLanguage": {
+      "conciseZhToEn": true,
+      "storyEnToZh": true
+    },
+    "mobile": {
+      "zh": {
+        "dialog": {
+          "x": 0,
+          "y": 173.640625,
+          "width": 390,
+          "height": 670.359375,
+          "clientHeight": 669,
+          "scrollHeight": 669,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "internalScroll": false,
+        "footerReachable": true,
+        "horizontalOverflow": {
+          "doc": 0,
+          "body": 0
+        },
+        "mobileToc": true
+      },
+      "en": {
+        "dialog": {
+          "x": 0,
+          "y": 67.53125,
+          "width": 390,
+          "height": 776.46875,
+          "clientHeight": 775,
+          "scrollHeight": 844,
+          "clientWidth": 390,
+          "scrollWidth": 390
+        },
+        "internalScroll": true,
+        "footerReachable": true,
+        "horizontalOverflow": {
+          "doc": 0,
+          "body": 0
+        },
+        "mobileToc": true
+      }
+    }
+  },
+  "pdfSmoke": null
+}
