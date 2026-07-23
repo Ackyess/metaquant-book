@@ -81,6 +81,21 @@ def wait_active(page: Page, slug: str) -> None:
     )
 
 
+def active_content_font_size(page: Page) -> float:
+    return page.locator("section.screen.active .content").evaluate(
+        "el => parseFloat(getComputedStyle(el).fontSize)"
+    )
+
+
+def assert_topbar_offscreen(page: Page) -> None:
+    assert page.locator(".topbar").evaluate(
+        """bar => Math.max(
+            bar.getBoundingClientRect().bottom,
+            ...Array.from(bar.children, child => child.getBoundingClientRect().bottom)
+        ) <= 0"""
+    )
+
+
 def choose(page: Page, style: str) -> None:
     page.locator(f'button[data-reading-style="{style}"]').click()
     page.wait_for_function("document.getElementById('styleDialog').hidden === true")
@@ -88,6 +103,12 @@ def choose(page: Page, style: str) -> None:
 
 
 def open_selector(page: Page) -> None:
+    viewport = page.viewport_size
+    if viewport and viewport["width"] > 820:
+        page.mouse.move(8, 2)
+        page.wait_for_function(
+            "document.querySelector('.topbar').getBoundingClientRect().bottom >= 54"
+        )
     page.locator("#styleBtn").click()
     page.wait_for_function("document.getElementById('styleDialog').hidden === false")
     assert page.evaluate("document.getElementById('reader').inert") is True
@@ -150,6 +171,24 @@ def reader_smoke(
     choose(page, "story")
     wait_active(page, "01-what-is-quant")
     assert page.locator("#styleBtn").is_visible()
+    page.locator("#main").evaluate("el => { el.scrollTop = 180; }")
+    page.wait_for_function("document.getElementById('reader').classList.contains('topbar-hidden')")
+    page.wait_for_timeout(220)
+    assert_topbar_offscreen(page)
+    page.mouse.move(8, 2)
+    page.wait_for_function("!document.getElementById('reader').classList.contains('topbar-hidden')")
+    font_button = page.locator("#fontBtn")
+    normal_font = active_content_font_size(page)
+    assert font_button.inner_text().strip() == "A"
+    font_button.click()
+    large_font = active_content_font_size(page)
+    assert font_button.inner_text().strip() == "A+" and large_font > normal_font
+    font_button.click()
+    small_font = active_content_font_size(page)
+    assert font_button.inner_text().strip() == "A−" and small_font < normal_font
+    font_button.click()
+    assert font_button.inner_text().strip() == "A"
+    assert active_content_font_size(page) == normal_font
     story = chapter_texts(page)
 
     open_selector(page)
@@ -197,6 +236,8 @@ def reader_smoke(
 
     result = {
         "desktopDialog": desktop_box,
+        "hoverRevealsTopbar": True,
+        "fontSizes": {"small": small_font, "normal": normal_font, "large": large_font},
         "keyChapterDifferences": differences,
         "persistence": True,
         "reselection": True,
@@ -256,16 +297,40 @@ def mobile_audit(
     sheet_metrics = page.locator(".style-sheet").evaluate(
         "el => ({clientHeight:el.clientHeight,scrollHeight:el.scrollHeight})"
     )
-    page.locator(".style-note").scroll_into_view_if_needed()
-    page.locator(".style-note").wait_for(state="visible")
-    footer_box = page.locator(".style-note").bounding_box()
-    assert footer_box is not None and footer_box["y"] + footer_box["height"] <= 844 + 1.5
+    last_choice = page.locator(".style-option").last
+    last_choice.scroll_into_view_if_needed()
+    last_choice.wait_for(state="visible")
+    last_choice_box = last_choice.bounding_box()
+    assert last_choice_box is not None and last_choice_box["y"] + last_choice_box["height"] <= 844 + 1.5
     choose(page, "concise")
     wait_active(page, "04-market-microstructure")
     overflow = page.evaluate(
         "({doc:document.documentElement.scrollWidth-innerWidth, body:document.body.scrollWidth-innerWidth})"
     )
     assert overflow["doc"] <= 1 and overflow["body"] <= 1, overflow
+    page.locator("#main").evaluate("el => { el.scrollTop = 180; }")
+    page.wait_for_function("document.getElementById('reader').classList.contains('topbar-hidden')")
+    page.wait_for_timeout(220)
+    assert_topbar_offscreen(page)
+    page.locator("#main").evaluate("el => { el.scrollTop = 110; }")
+    page.wait_for_function("!document.getElementById('reader').classList.contains('topbar-hidden')")
+    assert page.locator("#toolsBtn").is_visible()
+    assert not page.locator("#topbarTools").is_visible()
+    page.locator("#toolsBtn").click()
+    page.locator("#topbarTools").wait_for(state="visible")
+    assert page.locator("#toolsBtn").get_attribute("aria-expanded") == "true"
+    topbar_controls = page.evaluate(
+        """Object.fromEntries(
+            ['styleBtn','fontBtn','langBtn','themeBtn'].map(id => {
+                const rect = document.getElementById(id).getBoundingClientRect();
+                return [id, {left: rect.left, right: rect.right, width: rect.width}];
+            })
+        )"""
+    )
+    assert all(item["left"] >= -1 and item["right"] <= 391 for item in topbar_controls.values())
+    page.keyboard.press("Escape")
+    page.locator("#topbarTools").wait_for(state="hidden")
+    assert page.locator("#toolsBtn").get_attribute("aria-expanded") == "false"
 
     page.locator("#menuBtn").click()
     assert page.locator("#sidebar").get_attribute("aria-hidden") == "false"
@@ -278,6 +343,8 @@ def mobile_audit(
         "internalScroll": sheet_metrics["scrollHeight"] > sheet_metrics["clientHeight"] + 1,
         "footerReachable": True,
         "horizontalOverflow": overflow,
+        "autoHideTopbar": True,
+        "topbarControls": topbar_controls,
         "mobileToc": True,
     }
 
@@ -289,6 +356,9 @@ def cross_language_memory(browser: Browser, base: str, errors: list[dict[str, st
     page.goto(base + "/#04-market-microstructure", wait_until="networkidle")
     choose(page, "concise")
     wait_active(page, "04-market-microstructure")
+    page.locator("#fontBtn").click()
+    assert page.locator("#fontBtn").inner_text().strip() == "A+"
+    assert page.evaluate("localStorage.getItem('mq-font-size-v1')") == "large"
     page.locator("#langBtn").click()
     page.wait_for_url("**/en/**")
     wait_active(page, "04-market-microstructure")
@@ -296,6 +366,7 @@ def cross_language_memory(browser: Browser, base: str, errors: list[dict[str, st
     assert page.evaluate("localStorage.getItem('mq-reading-style-v1')") == "concise"
     page.wait_for_function("document.getElementById('styleBtn').textContent.trim() === 'C'")
     assert page.locator("#styleBtn").inner_text().strip() == "C"
+    assert page.locator("#fontBtn").inner_text().strip() == "A+"
 
     open_selector(page)
     choose(page, "story")
@@ -305,8 +376,9 @@ def cross_language_memory(browser: Browser, base: str, errors: list[dict[str, st
     assert page.evaluate("localStorage.getItem('mq-reading-style-v1')") == "story"
     page.wait_for_function("document.getElementById('styleBtn').textContent.trim() === '叙'")
     assert page.locator("#styleBtn").inner_text().strip() == "叙"
+    assert page.locator("#fontBtn").inner_text().strip() == "A+"
     context.close()
-    return {"conciseZhToEn": True, "storyEnToZh": True}
+    return {"conciseZhToEn": True, "storyEnToZh": True, "fontSizePreserved": True}
 
 
 def main() -> None:

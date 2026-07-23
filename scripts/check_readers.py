@@ -155,6 +155,12 @@ def check_reader(
     assert ".preface-book-stage{border-bottom:0;background:none}" in html, (
         f"{relative_path}: preface stage background returned"
     )
+    assert "#00-preface.active .book-volume{animation:none}" in html, (
+        f"{relative_path}: repeated preface cover entrance animation returned"
+    )
+    assert 'rel="preload"' in html and 'rel="prefetch"' in html, (
+        f"{relative_path}: current and alternate cover warming is incomplete"
+    )
     assert ".book-volume::before{inset:9px -14px 7px 12px}.book-volume::after{content:none}" in html, (
         f"{relative_path}: page block protrudes below the cover"
     )
@@ -208,16 +214,16 @@ def main() -> None:
     zh, zh_parser, zh_payload = check_reader(
         "index.html",
         "https://quant.leooo.fun/",
-        "assets/cover-ai-v2.png",
+        "assets/cover-ai-v2.webp",
         "versions/03-humanizer-zh-round2.md",
-        ("正文有两种讲法", "生活化版", "精炼版"),
+        ("接下来，你想怎么读？", "生活化版", "精炼版"),
     )
     en, en_parser, en_payload = check_reader(
         "en/index.html",
         "https://quant.leooo.fun/en/",
-        "../assets/cover-ai-v2-en.png",
+        "../assets/cover-ai-v2-en.webp",
         "versions/03-humanizer-en-round2.md",
-        ("TWO WAYS TO READ THE MAIN TEXT", "Story Edition", "Concise Edition"),
+        ("How would you like to continue?", "Story Edition", "Concise Edition"),
     )
 
     book = (ROOT / "book.md").read_text(encoding="utf-8")
@@ -257,12 +263,16 @@ def main() -> None:
     assert 'class="download-row"' in en, "English download hierarchy missing"
     assert 'href="en/?switch=1"' in zh, "Chinese language link is not cache-routed"
     assert 'href="../?switch=1"' in en, "English language link is not cache-routed"
-    assert 'navigator.serviceWorker.register("/sw.js?v=1.1")' in zh, "Chinese language cache is not registered"
-    assert 'navigator.serviceWorker.register("/sw.js?v=1.1")' in en, "English language cache is not registered"
+    assert 'navigator.serviceWorker.register("/sw.js?v=1.1.1")' in zh, "Chinese language cache is not registered"
+    assert 'navigator.serviceWorker.register("/sw.js?v=1.1.1")' in en, "English language cache is not registered"
     assert 'cacheName="mq-language-v2"' in zh and 'cacheName="mq-language-v2"' in en, (
         "reader language caches are not release-versioned"
     )
     assert 'LANGUAGE_CACHE = "mq-language-v2"' in sw, "service worker cache is stale"
+    assert 'COVER_CACHE = "mq-covers-v1"' in sw, "service worker cover cache is stale"
+    assert all(path in sw for path in ("/assets/cover-ai-v2.webp", "/assets/cover-ai-v2-en.webp")), (
+        "service worker cover pre-cache is incomplete"
+    )
     assert 'event.request.mode !== "navigate"' in sw, "service worker must only handle navigations"
     assert 'url.search === "?switch=1"' in sw, "service worker language-switch guard is missing"
     assert hashlib.sha256(book.encode()).hexdigest() in zh, "Chinese full-source hash is stale"
@@ -276,6 +286,10 @@ def main() -> None:
 
     for cover in (ROOT / "assets" / "cover-ai-v2.png", ROOT / "assets" / "cover-ai-v2-en.png"):
         assert png_size(cover) == (1024, 1536), f"{cover}: unexpected cover dimensions"
+    for cover in (ROOT / "assets" / "cover-ai-v2.webp", ROOT / "assets" / "cover-ai-v2-en.webp"):
+        header = cover.read_bytes()[:12]
+        assert header[:4] == b"RIFF" and header[8:] == b"WEBP", f"{cover}: invalid WebP cover"
+        assert cover.stat().st_size <= 120_000, f"{cover}: optimized cover is unexpectedly large"
 
     print("reader checks: passed")
 
