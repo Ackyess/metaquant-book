@@ -1,10 +1,13 @@
 # 诚实的量化交易
 
-《诚实的量化交易：写给新手的第一堂课》1.0 单文件网页阅读器与简体中文源稿。
+《诚实的量化交易：写给新手的第一堂课》1.0 中英文网页阅读器与源稿。
 
 - 在线阅读：<https://quant.leooo.fun/>
+- English edition: <https://quant.leooo.fun/en/>
 - `index.html`：可直接打开或静态托管的完整阅读器
 - `book.md`：最终简体中文编辑源稿，包含脚注
+- `en/index.html`：英文网页阅读器
+- `book.en.md`：完整英文译稿
 - `output/epub/诚实的量化交易-1.0.epub`：适用于 Apple Books、Kobo 与“发送至 Kindle”的 EPUB 3
 - `output/pdf/诚实的量化交易-1.0.pdf`：带封面、目录与页码的 A5 固定版式
 - `versions/`：早期简体稿、GPT 修订稿与手工修订快照

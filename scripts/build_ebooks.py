@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import base64
 import datetime as dt
+import hashlib
 import html
 import re
 import tempfile
@@ -26,6 +27,9 @@ from pypdf.generic import NameObject, TextStringObject
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "book.md"
+EN_SOURCE = ROOT / "book.en.md"
+ZH_READER = ROOT / "index.html"
+EN_READER = ROOT / "en" / "index.html"
 OUTPUT = ROOT / "output"
 EPUB_PATH = OUTPUT / "epub" / "诚实的量化交易-1.0.epub"
 PDF_PATH = OUTPUT / "pdf" / "诚实的量化交易-1.0.pdf"
@@ -414,6 +418,42 @@ def validate_pdf(path: Path) -> None:
     assert reader.trailer["/Root"].get("/Lang") == LANG
 
 
+def validate_bilingual_reader() -> None:
+    chinese = SOURCE.read_text(encoding="utf-8")
+    english = EN_SOURCE.read_text(encoding="utf-8")
+    for pattern in (
+        r"(?m)^# ",
+        r"(?m)^## ",
+        r"(?m)^### ",
+        r"(?m)^\s*[-*]\s+\[[ xX]\]",
+        r"(?m)^\[\^[^]]+\]:",
+        r"[⚠🔬📌✍]",
+    ):
+        assert len(re.findall(pattern, english)) == len(re.findall(pattern, chinese)), pattern
+    assert not re.search(r"[\u3400-\u9fff]", english), "English source contains CJK text"
+
+    zh_html = ZH_READER.read_text(encoding="utf-8")
+    en_html = EN_READER.read_text(encoding="utf-8")
+    screens = re.findall(
+        r'<section(?=[^>]*\bclass="[^"]*\bscreen\b[^"]*")(?=[^>]*\bid="([^"]+)")[^>]*>',
+        en_html,
+    )
+    assert screens == ["cover", *SLUGS]
+    assert re.findall(r'\bdata-target="([^"]+)"', en_html) == SLUGS
+    assert len(re.findall(r'<button\b[^>]*\bclass="footnote-ref"', en_html)) == 6
+    assert re.search(r'<html\b[^>]*\blang="en"', en_html)
+    assert 'id="langBtn"' in zh_html and 'href="en/"' in zh_html
+    assert 'id="langBtn"' in en_html and 'href="../"' in en_html
+    assert "languageLink.hash='#'+ids[cur]" in zh_html
+    assert "languageLink.hash='#'+ids[cur]" in en_html
+    assert "mq-reading-position-v1-en" in en_html
+    source_hash = hashlib.sha256(english.encode()).hexdigest()
+    assert re.search(
+        rf'<meta(?=[^>]*\bname="source-sha256")(?=[^>]*\bcontent="{source_hash}")[^>]*>',
+        en_html,
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--format", choices=("all", "epub", "pdf"), default="all")
@@ -423,8 +463,10 @@ def main() -> int:
     if args.check:
         validate_epub(EPUB_PATH, len(SLUGS))
         validate_pdf(PDF_PATH)
+        validate_bilingual_reader()
         print(f"EPUB OK: {EPUB_PATH}")
         print(f"PDF OK: {PDF_PATH}")
+        print(f"Bilingual reader OK: {EN_READER}")
         return 0
 
     sections = split_sections(SOURCE.read_text(encoding="utf-8"))
