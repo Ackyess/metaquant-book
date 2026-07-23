@@ -57,7 +57,7 @@
  --sans:"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;
  --mono:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,monospace;
  --paper:#ece7da;--panel:#f3eee2;--raise:#faf7ef;
- --paper-grain:url("assets/paper-handmade-v1.webp");--thread-fiber-mask:url("assets/thread-fiber-mask.svg");--ink-edge-mask:url("assets/ink-edge-mask.svg");
+ --paper-grain-light:url("assets/paper-handmade-v1.webp");--paper-grain-dark:url("assets/paper-charcoal-zine-v1.webp");--paper-grain:var(--paper-grain-light);--thread-fiber-mask:url("assets/thread-fiber-mask.svg");--ink-edge-mask:url("assets/ink-edge-mask.svg");
  --ink:#212a2e;--ink-soft:#586259;--faint:#5f6961;
  --line:rgba(33,42,46,.14);--line-strong:rgba(33,42,46,.24);
  --brass:#9d7328;--brass-bright:#b5852f;--sea:#2c5c58;
@@ -66,16 +66,16 @@
  color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root{
- --paper:#0f151c;--panel:#151d26;--raise:#1b2531;
- --ink:#e8e2d4;--ink-soft:#aab3ab;--faint:#8c968e;
- --line:rgba(232,226,212,.12);--line-strong:rgba(232,226,212,.2);
- --brass:#cfa050;--brass-bright:#e2b466;--sea:#5fa39f;
- --c-warn:#d69a44;--c-lab:#5fa39f;--c-points:#c7cdc4;--c-exercise:#cfa050;
- --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.4);
+ --paper:#171c22;--panel:#1d2429;--raise:#262d31;--paper-grain:var(--paper-grain-dark);
+ --ink:#d8d1c2;--ink-soft:#adb2aa;--faint:#959d95;
+ --line:rgba(216,209,194,.13);--line-strong:rgba(216,209,194,.22);
+ --brass:#b88b46;--brass-bright:#d0a45c;--sea:#659b98;
+ --c-warn:#c48743;--c-lab:#5e9691;--c-points:#b8beb6;--c-exercise:#b88b46;
+ --shadow:0 1px 1px rgba(0,0,0,.28),0 10px 26px rgba(0,0,0,.34);
  color-scheme:dark;
 }}
 :root[data-theme="light"]{
- --paper:#ece7da;--panel:#f3eee2;--raise:#faf7ef;
+ --paper:#ece7da;--panel:#f3eee2;--raise:#faf7ef;--paper-grain:var(--paper-grain-light);
  --ink:#212a2e;--ink-soft:#586259;--faint:#5f6961;
  --line:rgba(33,42,46,.14);--line-strong:rgba(33,42,46,.24);
  --brass:#9d7328;--brass-bright:#b5852f;--sea:#2c5c58;
@@ -84,12 +84,12 @@
  color-scheme:light;
 }
 :root[data-theme="dark"]{
- --paper:#0f151c;--panel:#151d26;--raise:#1b2531;
- --ink:#e8e2d4;--ink-soft:#aab3ab;--faint:#8c968e;
- --line:rgba(232,226,212,.12);--line-strong:rgba(232,226,212,.2);
- --brass:#cfa050;--brass-bright:#e2b466;--sea:#5fa39f;
- --c-warn:#d69a44;--c-lab:#5fa39f;--c-points:#c7cdc4;--c-exercise:#cfa050;
- --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.4);
+ --paper:#171c22;--panel:#1d2429;--raise:#262d31;--paper-grain:var(--paper-grain-dark);
+ --ink:#d8d1c2;--ink-soft:#adb2aa;--faint:#959d95;
+ --line:rgba(216,209,194,.13);--line-strong:rgba(216,209,194,.22);
+ --brass:#b88b46;--brass-bright:#d0a45c;--sea:#659b98;
+ --c-warn:#c48743;--c-lab:#5e9691;--c-points:#b8beb6;--c-exercise:#b88b46;
+ --shadow:0 1px 1px rgba(0,0,0,.28),0 10px 26px rgba(0,0,0,.34);
  color-scheme:dark;
 }
 *{box-sizing:border-box;}
@@ -210,6 +210,16 @@ h1.title{font-family:var(--serif);font-weight:700;font-size:clamp(26px,4.4vw,37p
 .book-jacket{clip-path:none}
 .book-volume:hover{transform:scale(.6666667) translateY(-10px) rotateX(1deg) rotateY(-2deg)}
 @keyframes prefaceBookIn{from{opacity:0;transform:scale(.6666667) rotateX(2deg) rotateY(-8deg)}to{opacity:1;transform:scale(.6666667) rotateX(2deg) rotateY(-8deg)}}
+:root[data-theme="dark"] .main{background-blend-mode:normal;background-size:360px 360px}
+:root[data-theme="dark"] .content,:root[data-theme="dark"] h1.title{color:color-mix(in srgb,var(--ink) 94%,transparent);-webkit-text-stroke:.006em color-mix(in srgb,var(--ink) 14%,transparent);text-shadow:.018em .012em .022em rgba(0,0,0,.5),-.009em .018em .04em rgba(0,0,0,.24)}
+:root[data-theme="dark"] :is(.topbar,.sidebar,.pbtn,.iconbtn),:root[data-theme="dark"] .reader.nav-collapsed .sidebar{background-image:linear-gradient(color-mix(in srgb,var(--panel) 68%,transparent),color-mix(in srgb,var(--panel) 68%,transparent)),var(--paper-grain);background-size:auto,360px 360px}
+:root[data-theme="dark"] .content .callout{background-image:var(--paper-grain);background-size:360px 360px;background-blend-mode:soft-light}
+@media (prefers-color-scheme:dark){
+ :root:not([data-theme]) .main{background-blend-mode:normal;background-size:360px 360px}
+ :root:not([data-theme]) .content,:root:not([data-theme]) h1.title{color:color-mix(in srgb,var(--ink) 94%,transparent);-webkit-text-stroke:.006em color-mix(in srgb,var(--ink) 14%,transparent);text-shadow:.018em .012em .022em rgba(0,0,0,.5),-.009em .018em .04em rgba(0,0,0,.24)}
+ :root:not([data-theme]) :is(.topbar,.sidebar,.pbtn,.iconbtn),:root:not([data-theme]) .reader.nav-collapsed .sidebar{background-image:linear-gradient(color-mix(in srgb,var(--panel) 68%,transparent),color-mix(in srgb,var(--panel) 68%,transparent)),var(--paper-grain);background-size:auto,360px 360px}
+ :root:not([data-theme]) .content .callout{background-image:var(--paper-grain);background-size:360px 360px;background-blend-mode:soft-light}
+}
 </style>
 <div class="reader" id="reader"><div class="progress"><span id="prog"></span></div><header class="topbar"><button class="iconbtn menu" id="menuBtn" aria-label="开关目录" aria-controls="sidebar" aria-expanded="true">&#9776;</button><div class="brand" id="brandHome" role="button" tabindex="0"><b>诚实的量化交易 · 1.1</b><span class="brand-sub" id="nowTitle"></span></div><div class="spacer"></div><button class="iconbtn stylebtn" id="styleBtn" aria-label="重新选择正文文风" title="重新选择正文文风" hidden>文风</button><a class="iconbtn langbtn" id="langBtn" href="en/?switch=1" hreflang="en" lang="en" aria-label="Read in English" title="English">EN</a><button class="iconbtn" id="themeBtn" aria-label="切换深浅色">&#9680;</button></header><nav class="sidebar" id="sidebar" aria-label="目录"><div class="toc-group"><div class="toc-label">卷首</div>
 <a class="toc-a" role="link" tabindex="0" data-target="00-preface"><span class="toc-no">00</span><span class="toc-t">前言</span></a>
